@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FiiPrezent.Services
+namespace FiiPrezent.Interfaces
 {
     public interface IParticipantsUpdated
     {

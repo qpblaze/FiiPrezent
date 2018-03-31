@@ -1,5 +1,6 @@
 ﻿using System;
 using FiiPrezent.Hubs;
+using FiiPrezent.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 
 namespace FiiPrezent.Services

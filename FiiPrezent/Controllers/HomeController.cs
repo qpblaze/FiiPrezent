@@ -1,18 +1,18 @@
-﻿using FiiPrezent.Models;
-using FiiPrezent.Services;
+﻿using System.Threading.Tasks;
+using FiiPrezent.Interfaces;
+using FiiPrezent.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
 
 namespace FiiPrezent.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly EventsService _eventsService;
+        private readonly IEventService _eventService;
 
-        public HomeController(EventsService eventsService)
+        public HomeController(IEventService eventService)
         {
-            _eventsService = eventsService;
+            _eventService = eventService;
         }
 
         public IActionResult Index()
@@ -21,38 +21,21 @@ namespace FiiPrezent.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(RsvpViewModel model)
+        public async Task<IActionResult> Index(RsvpViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            if (!ModelState.IsValid) return View(model);
 
-            Event @event = _eventsService.RegisterParticipant(model.Code, model.Name);
+            var @event = await _eventService.RegisterParticipantAsync(model.Code, model.Name);
             if (@event == null)
             {
                 ModelState.AddModelError<RsvpViewModel>(x => x.Code, "Wrong verification code");
                 return View(model);
             }
 
-            return RedirectToAction("Event", new
+            return RedirectToAction(nameof(EventsController.Details), "Events", new
             {
                 @event.Id
             });
-        }
-
-        public IActionResult Event(string id)
-        {
-            try
-            {
-                Event @event = _eventsService.FindEventById(Guid.Parse(id));
-
-                return View(new EventViewModel(@event));
-            }
-            catch (Exception)
-            {
-                return RedirectToAction(nameof(Index));
-            }
         }
     }
 }
