@@ -10,7 +10,7 @@
 <span>@Model.Description</span>
 
 <ol id="participants">
-    @foreach (var p in @Model.Participants)
+    @foreach (var p in Model.Participants)
     {
         <li>@p</li>
     }
@@ -20,9 +20,10 @@
 @section Scripts
 {
     <script>
+        var eventId = window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1);
         var participantsList = document.getElementById("participants");
-        var connection = new signalR.HubConnection("/participants");
-        
+        var connection = new signalR.HubConnection("/participants?eventId=" + eventId);
+
         function appendParticipant(name) {
             var li = document.createElement("li");
             li.innerText = name;
@@ -36,8 +37,6 @@
             });
         });
 
-        connection.start().then(function () {
-            connection.invoke("JoinEventRoom", "@Model.Id");
-        });
+        connection.start();
     </script>
 }

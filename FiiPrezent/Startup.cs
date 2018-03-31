@@ -1,10 +1,7 @@
-﻿using System;
-using FiiPrezent.Hubs;
+﻿using FiiPrezent.Hubs;
 using FiiPrezent.Services;
-using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FiiPrezent
@@ -15,10 +12,11 @@ namespace FiiPrezent
         {
             services.AddSignalR();
             services.AddMvc();
-            services.AddSingleton<EventsService>();
+
+            services.AddScoped<EventsService>();
             services.AddScoped<IParticipantsUpdated, ParticipantsUpdated>();
         }
-        
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -33,7 +31,6 @@ namespace FiiPrezent
 
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
-
         }
     }
 }
