@@ -6,25 +6,38 @@
     <title>@ViewData["Title"]</title>
     <link href="~/favicon.png" rel="icon">
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap-4/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap-4/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
 <body>
-    <div class="container">
-        @RenderBody()
-    </div>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link active" asp-action="Index" asp-controller="Events">Browse</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link main-item" asp-action="Create" asp-controller="Events">Create Event</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-action="Index" asp-controller="Home">Join</a>
+        </li>
+    </ul>
+
+    @RenderBody()
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/bootstrap-4/dist/js/bootstrap.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+        @Html.Partial("_ValidationScriptsPartial.cshtml")
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -35,12 +48,13 @@
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap-4/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+        @Html.Partial("_ValidationScriptsPartial.cshtml")
         <script src="~/js/site.js"></script>
     </environment>
 

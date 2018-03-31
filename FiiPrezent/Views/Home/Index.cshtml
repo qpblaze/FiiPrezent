@@ -2,29 +2,38 @@
 @using FiiPrezent.Models
 @model RsvpViewModel
 @{
-    ViewData["Title"] = "Prezent";
+    ViewData["Title"] = "Join Event";
 }
 
-<div class="row">
+<div class="hero-image-container">
+    <div class="hero-image"></div>
+</div>
 
-    <div class="col-sm-4 col-sm-offset-4">
-        <h2>Fii Foarte Prezent</h2>
-        <form asp-controller="Home" asp-action="Index" method="post">
-            <div class="form-group">
-                @* @Html.LabelFor(x => x.Name) *@
-                <label asp-for="Name">Name</label>
-                <input asp-for="Name" type="text" class="form-control" id="name" placeholder="Nume">
-                <span asp-validation-for="Name"></span>
+<div class="container">
+    <div class="col-md-12">
+        <div class="search-container">
+            <div class="title">
+                <h2>Join Event</h2>
             </div>
-            <div class="form-group">
-                <label asp-for="Code">Super secret code</label>
-                <input asp-for="Code" type="password" class="form-control" id="code" placeholder="Cod super secret">
-                <span asp-validation-for="Code"></span>
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <form asp-controller="Home" asp-action="Index" method="post">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" type="text" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Code" class="control-label"></label>
+                            <input asp-for="Code" type="password" class="form-control">
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-theme">Going</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <button type="submit" class="btn btn-default">Prezent</button>
-
-        </form>
+        </div>
     </div>
-
-
 </div>

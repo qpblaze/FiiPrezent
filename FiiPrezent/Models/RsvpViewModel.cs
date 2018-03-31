@@ -1,13 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace FiiPrezent.Models
 {
     public class RsvpViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter your name.")]
+        [DisplayName("Name")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter the secret code.")]
+        [DisplayName("Secret Code")]
         public string Code { get; set; }
     }
 }

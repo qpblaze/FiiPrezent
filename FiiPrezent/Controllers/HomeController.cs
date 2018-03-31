@@ -14,7 +14,7 @@ namespace FiiPrezent.Controllers
         {
             _eventService = eventService;
         }
-
+        
         public IActionResult Index()
         {
             return View();
@@ -28,7 +28,7 @@ namespace FiiPrezent.Controllers
             var @event = await _eventService.RegisterParticipantAsync(model.Code, model.Name);
             if (@event == null)
             {
-                ModelState.AddModelError<RsvpViewModel>(x => x.Code, "Wrong verification code");
+                ModelState.AddModelError<RsvpViewModel>(x => x.Code, "Wrong verification code.");
                 return View(model);
             }
 
