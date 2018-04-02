@@ -1,4 +1,6 @@
-﻿body {
+﻿@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,800");
+body {
+  font-family: 'Roboto', sans-serif;
   background-color: #f8f8ff; }
 
 .hero-image-container {
@@ -36,7 +38,7 @@
   .search-container .title {
     text-align: center;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 800;
     color: #17BEBB;
     margin-bottom: 50px; }
   .search-container .desc {

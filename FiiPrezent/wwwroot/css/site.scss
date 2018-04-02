@@ -1,4 +1,6 @@
-﻿$background-color: #f8f8ff;
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,800');
+
+$background-color: #f8f8ff;
 $background-color-light: #fff;
 $color-text-light: #fff;
 $color-text-dark: #2E282A;
@@ -24,6 +26,7 @@ $color-text-dark-faded: #666A73;
 }
 
 body {
+    font-family: 'Roboto', sans-serif;
     background-color: $background-color;
 }
 
@@ -75,7 +78,7 @@ body {
     .title {
         text-align: center;
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: 800;
         color: $color-text-theme;
         margin-bottom: 50px;
     }
