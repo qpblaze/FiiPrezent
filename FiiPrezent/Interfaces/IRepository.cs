@@ -14,7 +14,7 @@ namespace FiiPrezent.Interfaces
 
         Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate);
         
-        Task<TEntity> AddAsync(TEntity entity);
+        Task AddAsync(TEntity entity);
 
         void Update(TEntity entity);
 

@@ -1,0 +1,17 @@
+﻿@import "../base/_variables.scss";
+@import "../base/_typography.scss";
+
+.nav {
+    background-color: transparent;
+    padding-right: 80px;
+    padding-top: 40px;
+    .nav-item {
+        @include rfs(14);
+        padding: 0 10px;
+
+        .nav-link {
+            text-transform: lowercase;
+            color: $font-color-light;
+        }
+    }
+}

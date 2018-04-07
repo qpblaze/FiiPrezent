@@ -44,7 +44,8 @@ namespace FiiPrezent
 
             services.AddTransient<IRepository<Event>, Repository<Event>>();
             services.AddTransient<IRepository<Participant>, Repository<Participant>>();
-            services.AddTransient<IEventService, EventService>();
+            services.AddTransient<IParticipantsService, ParticipantsService>();
+            services.AddTransient<IEventsService, EventsService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 

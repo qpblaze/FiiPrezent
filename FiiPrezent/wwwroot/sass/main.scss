@@ -1,0 +1,83 @@
+﻿// Import the base
+@import "base/_variables.scss";
+@import "base/_typography.scss";
+@import "base/_mixins.scss";
+@import "base/_global.scss";
+
+// Import the components
+@import "components/_buttons.scss";
+@import "components/_nav.scss";
+@import "components/_inputs.scss";
+
+// Import pages
+@import "pages/_index.scss";
+
+
+.event {
+    width: 100%;
+    margin-bottom: 30px;
+    border-radius: 2px;
+    @include box_shadow(1);
+
+    .event-content {
+        padding: 10px 20px;
+    }
+
+    .name {
+        color: $color-text-dark;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    .description {
+        margin-top: 5px;
+        font-size: 0.8rem;
+    }
+
+    .date,
+    .location {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: $color-text-dark-faded;
+    }
+
+    .date {
+        margin-top: 20px;
+    }
+
+    .actions {
+        border-top: 1px solid #EFF2F5;
+        height: 40px;
+        text-align: right;
+
+        .action-item {
+            display: inline-block;
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            border-left: 1px solid #EFF2F5;
+            box-sizing: border-box;
+            text-align: center;
+
+
+            .btn-action {
+                color: $color-text-dark-faded;
+                background-color: transparent;
+            }
+
+            a {
+                color: $color-text-dark-faded;
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+#participants {
+    li {
+        font-size: 1.3rem;
+    }
+}

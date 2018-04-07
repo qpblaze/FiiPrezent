@@ -39,13 +39,9 @@ namespace FiiPrezent.Data
             return await _context.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public async Task AddAsync(TEntity entity)
         {
-            entity.Id = new Guid();
-            
             await _context.Set<TEntity>().AddAsync(entity);
-
-            return entity;
         }
 
         public void Update(TEntity entity)

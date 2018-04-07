@@ -1,0 +1,38 @@
+﻿@import "../lib/_rfs.scss";
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800');
+
+$font-family-text: 'Montserrat', sans-serif;
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 800;
+
+.font-size-small {
+    @include rfs(12);
+}
+
+.font-size-regular {
+    @include rfs(16);
+}
+
+.font-size-large {
+    @include rfs(24);
+}
+
+.font-size-x-large {
+    @include rfs(32);
+}
+
+.font-size-xx-large {
+    @include rfs(48);
+}
+
+.font-size-xxx-large {
+    @include rfs(64);
+}
+
+.font-size-xxxx-large {
+    @include rfs(96);
+}

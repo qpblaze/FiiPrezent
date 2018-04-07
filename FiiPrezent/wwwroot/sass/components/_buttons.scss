@@ -1,0 +1,43 @@
+﻿@import "../base/_variables.scss";
+@import "../base/_typography.scss";
+@import "../base/_mixins.scss";
+
+.btn-theme {
+    background-color: $color-text-theme;
+    padding: 15px 55px;
+    text-transform: uppercase;
+    color: $color-text-light;
+    font-weight: 500;
+    margin-top: 20px;
+
+    @include box_shadow(1);
+
+    &:hover {
+        @include box_shadow(2);
+    }
+}
+
+.btn--navigation {
+    @include rfs(14);
+    text-transform: lowercase;
+    padding: 8px 25px;
+    background: $color-primary;
+    color: $font-color-light;
+
+    @include box_shadow(1);
+
+    &:hover {
+        @include box_shadow(2);
+        color: $font-color-light;
+    }
+}
+
+.btn--hero {
+    background-color: transparent;
+    border: 2px solid $font-color-light;
+    @include rfs(20);
+    margin-top: 50px;
+    padding: 15px 40px;
+    color: $font-color-light;
+    text-transform: lowercase;
+}

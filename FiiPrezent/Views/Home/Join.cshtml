@@ -1,0 +1,39 @@
+﻿@using FiiPrezent.Controllers
+@using FiiPrezent.Models
+@model RsvpViewModel
+@{
+    ViewData["Title"] = "Join Event";
+}
+
+<div class="hero-image-container">
+    <div class="hero-image"></div>
+</div>
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="search-container">
+            <div class="title">
+                <h2>Join Event</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <form asp-controller="Home" asp-action="Index" method="post">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" type="text" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Code" class="control-label"></label>
+                            <input asp-for="Code" type="password" class="form-control">
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-theme">Going</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

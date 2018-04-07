@@ -1,26 +1,32 @@
-﻿using FiiPrezent.Entities;
+﻿using System;
+using System.Threading.Tasks;
+using FiiPrezent.Entities;
 using FiiPrezent.Interfaces;
 using FiiPrezent.Models;
+using FiiPrezent.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FiiPrezent.Controllers
 {
     public class EventsController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEventsService _eventsService;
 
-        public EventsController(IUnitOfWork unitOfWork)
+        public EventsController(IEventsService eventsService)
         {
-            _unitOfWork = unitOfWork;
+            _eventsService = eventsService;
         }
 
-        [Route("browse")]
+        private void AddModelErrors(ResultStatus result)
+        {
+            foreach (var error in result.GetErrors()) 
+                ModelState.AddModelError(error.Key, error.Value);
+        }
+
+        [Route("browse-event")]
         public async Task<IActionResult> Index()
         {
-            return View(await _unitOfWork.Events.ListAllAsync());
+            return View(await _eventsService.ListAllEventsAsync());
         }
 
         [Route("create-event")]
@@ -36,15 +42,8 @@ namespace FiiPrezent.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var @event = (await _unitOfWork.Events.GetAsync(x => x.SecretCode == model.SecretCode)).SingleOrDefault();
-            if(@event != null)
-            {
-                ModelState.AddModelError("SecretCode", "This code is already in use.");
-                return View(model);
-            }
-
             // TODO: Add auto mapper
-            @event = new Event
+            var @event = new Event
             {
                 Name = model.Name,
                 Description = model.Description,
@@ -53,8 +52,13 @@ namespace FiiPrezent.Controllers
                 Date = model.Date
             };
 
-            await _unitOfWork.Events.AddAsync(@event);
-            await _unitOfWork.CompletedAsync();
+            var result = await _eventsService.CreateEventAsync(@event);
+
+            if (!result.Succeded)
+            {
+                AddModelErrors(result);
+                return View(model);
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -62,27 +66,22 @@ namespace FiiPrezent.Controllers
         [Route("event")]
         public async Task<IActionResult> Details(Guid id)
         {
-            Event @event = await _unitOfWork.Events.GetByIdAsync(id);
+            var result = await _eventsService.GetEvent(id);
 
-            if (@event == null)
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+            if (result.ErrorType == ErrorType.NotFound)
+                return NotFound();
 
-            @event.Participants = await _unitOfWork.Participants.GetAsync(x => x.EventId == @event.Id);
-
-            return View(new EventViewModel(@event));
+            return View(new EventViewModel(result.Object));
         }
 
         [HttpPost]
         [Route("event")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var @event = await _unitOfWork.Events.GetByIdAsync(id);
+            var result = await _eventsService.DeleteEvent(id);
 
-            if(@event != null)
-            {
-                _unitOfWork.Events.Delete(@event);
-                await _unitOfWork.CompletedAsync();
-            }
+            if (result.ErrorType == ErrorType.NotFound)
+                return NotFound();
 
             return RedirectToAction(nameof(Index));
         }

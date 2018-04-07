@@ -1,0 +1,11 @@
+﻿@import "_variables.scss";
+@import "_typography.scss";
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: $font-family-text;
+    background-color: $body-background-color;
+}

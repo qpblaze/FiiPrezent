@@ -5,29 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link href="~/favicon.png" rel="icon">
+
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap-4/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/sass/main.min.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap-4/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link href="~/sass/main.min.css" rel="stylesheet" />
     </environment>
 </head>
 <body>
-    <ul class="nav justify-content-center">
+    <ul class="nav justify-content-md-end justify-content-center">
         <li class="nav-item">
             <a class="nav-link active" asp-action="Index" asp-controller="Events">Browse</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link main-item" asp-action="Create" asp-controller="Events">Create Event</a>
+            <a class="nav-link" asp-action="Create" asp-controller="Events">Create Event</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-action="Index" asp-controller="Home">Join</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn btn--navigation" asp-action="Index" asp-controller="Home">Log In</a>
         </li>
     </ul>
 

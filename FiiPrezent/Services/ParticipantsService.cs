@@ -1,16 +1,17 @@
-﻿using FiiPrezent.Entities;
-using FiiPrezent.Interfaces;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FiiPrezent.Entities;
+using FiiPrezent.Interfaces;
 
 namespace FiiPrezent.Services
 {
-    public class EventService : IEventService
+    public class ParticipantsService : IParticipantsService
     {
         private readonly IParticipantsUpdated _participantsUpdated;
         private readonly IUnitOfWork _unitOfWork;
 
-        public EventService(
+        public ParticipantsService(
             IParticipantsUpdated participantsUpdated,
             IUnitOfWork unitOfWork)
         {
@@ -18,22 +19,16 @@ namespace FiiPrezent.Services
             _unitOfWork = unitOfWork;
         }
 
-        private async Task<Event> GetByVerificationCode(string code)
+        public async Task<ResultStatus> RegisterParticipantAsync(string code, string name)
         {
-            return (await _unitOfWork.Events.GetAsync(e => e.SecretCode == code)).SingleOrDefault();
-        }
-
-        public async Task<Event> RegisterParticipantAsync(string code, string name)
-        {
-            var @event = await GetByVerificationCode(code);
+            var @event = (await _unitOfWork.Events.GetAsync(e => e.SecretCode == code)).SingleOrDefault();
 
             if (@event == null)
-            {
-                return null;
-            }
+                return new ResultStatus("SecretCode", "Wrong verification code.");
 
             var participant = new Participant
             {
+                Id = Guid.NewGuid(),
                 Name = name,
                 Event = @event
             };
@@ -45,7 +40,7 @@ namespace FiiPrezent.Services
 
             _participantsUpdated.OnParticipantsUpdated(@event.Id, participants);
 
-            return @event;
+            return new ResultStatus(@event.Id);
         }
     }
 }
