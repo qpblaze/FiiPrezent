@@ -1,10 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using FiiPrezent.Entities;
+﻿using FiiPrezent.Entities;
 using FiiPrezent.Interfaces;
 using FiiPrezent.Models;
 using FiiPrezent.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FiiPrezent.Controllers
 {
@@ -19,16 +22,43 @@ namespace FiiPrezent.Controllers
 
         private void AddModelErrors(ResultStatus result)
         {
-            foreach (var error in result.GetErrors()) 
+            foreach (var error in result.GetErrors())
                 ModelState.AddModelError(error.Key, error.Value);
         }
 
-        [Route("browse-event")]
-        public async Task<IActionResult> Index()
+        [Route("browse")]
+        public async Task<IActionResult> Browse()
         {
-            return View(await _eventsService.ListAllEventsAsync());
+            BroseEventsViewModel model = new BroseEventsViewModel
+            {
+                Events = await _eventsService.ListAllEventsAsync(),
+                Filter = new FilterEventsViewModel()
+            };
+
+            return View(model);
         }
 
+        [HttpPost]
+        [Route("browse")]
+        public async Task<IActionResult> Browse(BroseEventsViewModel model)
+        {
+            var events = (await _eventsService.ListAllEventsAsync()).AsQueryable();
+
+            if (!string.IsNullOrEmpty(model.Filter.Name))
+                events = events.Where(x => x.Name.ToLower().Contains(model.Filter.Name));
+
+            if (!string.IsNullOrEmpty(model.Filter.Location))
+                events = events.Where(x => x.Location.ToLower().Contains(model.Filter.Location));
+
+            if (!string.IsNullOrEmpty(model.Filter.Date))
+                events = events.Where(x => x.Date.ToString().Contains(model.Filter.Date));
+
+            model.Events = events.AsEnumerable();
+
+            return View(model);
+        }
+
+        [Authorize]
         [Route("create-event")]
         public IActionResult Create()
         {
@@ -36,16 +66,18 @@ namespace FiiPrezent.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("create-event")]
         public async Task<IActionResult> Create(CreateEventViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
-
-            // TODO: Add auto mapper
+            
             var @event = new Event
             {
+                AccountId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value,
                 Name = model.Name,
+                ImagePath = model.ImagePath ?? "/img/event-placeholder.jpg",
                 Description = model.Description,
                 SecretCode = model.SecretCode,
                 Location = model.Location,
@@ -60,7 +92,7 @@ namespace FiiPrezent.Controllers
                 return View(model);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Browse));
         }
 
         [Route("event")]
@@ -83,7 +115,7 @@ namespace FiiPrezent.Controllers
             if (result.ErrorType == ErrorType.NotFound)
                 return NotFound();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Browse));
         }
     }
 }

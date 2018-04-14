@@ -1,11 +1,66 @@
 ﻿@import "_variables.scss";
 @import "_typography.scss";
-
-html, body {
-    height: 100%;
-}
+@import "_mixins.scss";
 
 body {
     font-family: $font-family-text;
-    background-color: $body-background-color;
+}
+
+.has-bg-img {
+    .is-bg-img {
+        // js does the work
+        // this is for intellisense
+    }
+}
+
+#index {
+    .title {
+        font-weight: 800;
+    }
+}
+
+.hero {
+    background-size: cover;
+    position: relative;
+    overflow: visible;
+
+    .hero-filter {
+        background: linear-gradient($color-secondary, $color-primary);
+        opacity: .8;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+
+    .title {
+        color: $font-color-light;
+        @include rfs(48);
+    }
+
+    .subtitle {
+        color: $font-color-light;
+        @include rfs(24);
+    }
+}
+
+.card-box {
+    @include box_shadow(2);
+    margin-top: -75px;
+    padding: 50px 30px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 3rem;
+
+    &__title {
+        text-align: center;
+        margin-bottom: 2rem;
+        @include rfs(30);
+        color: $font-color-theme;
+    }
+
+    &__subtitle {
+        text-align: center;
+        margin-bottom: 2rem;
+        @include rfs(20);
+    }
 }

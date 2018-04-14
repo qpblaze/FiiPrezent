@@ -19,19 +19,15 @@ namespace FiiPrezent.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ResultStatus> RegisterParticipantAsync(string code, string name)
+        public async Task<ResultStatus> RegisterParticipantAsync(string code, Participant participant)
         {
             var @event = (await _unitOfWork.Events.GetAsync(e => e.SecretCode == code)).SingleOrDefault();
 
             if (@event == null)
                 return new ResultStatus("SecretCode", "Wrong verification code.");
 
-            var participant = new Participant
-            {
-                Id = Guid.NewGuid(),
-                Name = name,
-                Event = @event
-            };
+            participant.Id = Guid.NewGuid();
+            participant.Event = @event;
 
             await _unitOfWork.Participants.AddAsync(participant);
             await _unitOfWork.CompletedAsync();

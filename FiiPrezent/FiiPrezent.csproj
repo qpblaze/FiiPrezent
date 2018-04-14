@@ -5,6 +5,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.1.0-preview2-final" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-preview1-final" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.0.0-preview1-final" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0-preview1-final" />
@@ -17,5 +20,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Services\Event.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\.gitignore" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\CHANGELOG.md" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\dist\bulma-calendar.js" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\dist\bulma-calendar.min.js" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\dist\bulma-calendar.sass" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\gulpfile.js" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\LICENSE" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\README.md" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\src\extension.js" />
+    <None Include="wwwroot\lib\bulma-0.6.2\extensions\bulma-calendar-master\src\extension.sass" />
   </ItemGroup>
 </Project>

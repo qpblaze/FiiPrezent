@@ -3,8 +3,11 @@ using FiiPrezent.Entities;
 using FiiPrezent.Hubs;
 using FiiPrezent.Interfaces;
 using FiiPrezent.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +23,7 @@ namespace FiiPrezent
         {
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("secrets.json", true, true)
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true)
                 .AddEnvironmentVariables()
@@ -40,6 +44,16 @@ namespace FiiPrezent
                 optiions.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                 .AddCookie(o => o.LoginPath = new PathString("/login"))
+                 .AddFacebook(o =>
+                 {
+                     o.AppId = Configuration["Authentication:Facebook:AppId"];
+                     o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                     o.Scope.Add("public_profile");
+                     o.Fields.Add("picture");
+                 });
+
             services.AddScoped<IParticipantsUpdated, ParticipantsUpdated>();
 
             services.AddTransient<IRepository<Event>, Repository<Event>>();
@@ -52,6 +66,8 @@ namespace FiiPrezent
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+
+            app.UseAuthentication();
 
             app.UseSignalR(routes => { routes.MapHub<UpdateParticipants>("/participants"); });
 

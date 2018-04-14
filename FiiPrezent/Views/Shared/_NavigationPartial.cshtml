@@ -1,0 +1,39 @@
+﻿<nav class="navbar">
+    <div class="container">
+        <div class="navbar-brand">
+            <span class="navbar-burger burger" data-target="navbarMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+        </div>
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" asp-controller="Home" asp-action="Index">
+                    Home
+                </a>
+                <a class="navbar-item" asp-controller="Events" asp-action="Browse">
+                    Browse
+                </a>
+                <a class="navbar-item" asp-controller="Home" asp-action="Join">
+                    Join
+                </a>
+                <a class="navbar-item" asp-controller="Events" asp-action="Create">
+                    Create
+                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                        <a class="navbar-item" asp-controller="Accounts" asp-action="LogOut">
+                            Log Out
+                        </a>
+                }
+                else
+                {
+                    <a class="navbar-item" asp-controller="Accounts" asp-action="LogIn">
+                        Log In
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</nav>

@@ -2,27 +2,27 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="h-100">
-    <div class="h-100 w-100 d-table">
-        <div class="d-table-cell align-middle">
+<section class="hero is-fullheight has-bg-img" id="index">
+    <img src="~/img/bg.jpg" class="is-bg-img" />
+    <div class="hero-filter"></div>
+    <div class="hero-head">
+        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+    </div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns is-vcentered">
 
-            <div class="hero">
-                <div class="hero__image">
-                    <div class="hero__filter">
-                    </div>
-                </div>
-
-                <div class="hero__content">
-                    <div class="hero__title">
+                <div class="column is-6 is-offset-3">
+                    <h1 class="title is-spaced is-1">
                         Fii Prezent
-                    </div>
-                    <div class="hero__description">
-                        Are you special enough to join?
-                    </div>
-                    <button class="btn btn--hero">Browse Events</button>
+                    </h1>
+                    <h2 class="subtitle">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Curabitur ac lectus tincidunt, commodo nibh sed, convallis metus.
+                    </h2>
+                    <a asp-controller="Events" asp-action="Browse" class="button is-medium is-white is-outlined button--hero">browse events</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
-da
+</section>

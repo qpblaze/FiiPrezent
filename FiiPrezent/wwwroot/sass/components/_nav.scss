@@ -1,17 +1,19 @@
 ﻿@import "../base/_variables.scss";
 @import "../base/_typography.scss";
 
-.nav {
+.navbar {
     background-color: transparent;
-    padding-right: 80px;
-    padding-top: 40px;
-    .nav-item {
-        @include rfs(14);
-        padding: 0 10px;
+    padding-top: 2rem;
 
-        .nav-link {
-            text-transform: lowercase;
+    .navbar-item {
+        @include rfs(14);
+        text-transform: lowercase;
+        color: $font-color-light;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, .1);
             color: $font-color-light;
+            border-radius: 5px;
         }
     }
 }

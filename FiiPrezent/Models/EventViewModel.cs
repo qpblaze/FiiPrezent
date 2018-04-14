@@ -1,6 +1,6 @@
-﻿using FiiPrezent.Controllers;
-using FiiPrezent.Entities;
-using FiiPrezent.Services;
+﻿using FiiPrezent.Entities;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FiiPrezent.Models
@@ -12,12 +12,12 @@ namespace FiiPrezent.Models
             Id = @event.Id.ToString();
             Name = @event.Name;
             Description = @event.Description;
-            Participants = @event.Participants.Select(x => x.Name).ToArray();
+            Participants = @event.Participants;
         }
 
         public string Id { get; set; }
         public string Name { get; }
         public string Description { get; }
-        public string[] Participants { get; }
+        public IEnumerable<Participant> Participants { get; set; }
     }
 }

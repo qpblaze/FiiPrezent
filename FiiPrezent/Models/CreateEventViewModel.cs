@@ -22,6 +22,9 @@ namespace FiiPrezent.Models
         [MaxLength(20)]
         public string Location { get; set; }
 
+        [DisplayName("Image Link")]
+        public string ImagePath { get; set; }
+
         [Required(ErrorMessage = "Please enter the date.")]
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }

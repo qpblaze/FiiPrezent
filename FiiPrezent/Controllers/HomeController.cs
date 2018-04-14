@@ -1,7 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using FiiPrezent.Entities;
+using FiiPrezent.Helpers;
 using FiiPrezent.Interfaces;
 using FiiPrezent.Models;
 using FiiPrezent.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiiPrezent.Controllers
@@ -26,13 +30,30 @@ namespace FiiPrezent.Controllers
             return View();
         }
 
+        [Authorize]
+        [Route("join")]
+        public IActionResult Join()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Index(RsvpViewModel model)
+        [Authorize]
+        [Route("join")]
+        public async Task<IActionResult> Join(RsvpViewModel model)
         {
             if (!ModelState.IsValid) 
                 return View(model);
 
-            var result = await _participantsService.RegisterParticipantAsync(model.Code, model.Name);
+            Participant participant = new Participant
+            {
+                NameIdentifier = User.GetNameIdentifier(),
+                Name = User.Identity.Name,
+                ImagePath = User.GetProfileImage(),
+                Email = User.GetEmail()
+            };
+
+            var result = await _participantsService.RegisterParticipantAsync(model.Code, participant);
 
             if (!result.Succeded)
             {
