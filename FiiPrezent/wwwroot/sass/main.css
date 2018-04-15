@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800");
 .font-size-small {
   font-size: 0.75rem; }
 
@@ -301,4 +302,47 @@ body {
         color: #666A73; }
       .event__actions .action-item:hover {
         cursor: pointer; }
+
+.font-size-small {
+  font-size: 0.75rem; }
+
+.font-size-regular {
+  font-size: 1rem; }
+
+.font-size-large {
+  font-size: 1.5rem; }
+  @media (max-width: 1200px) {
+    .font-size-large {
+      font-size: calc(1.1rem + 0.53333vw) ; } }
+
+.font-size-x-large {
+  font-size: 2rem; }
+  @media (max-width: 1200px) {
+    .font-size-x-large {
+      font-size: calc(1.2rem + 1.06667vw) ; } }
+
+.font-size-xx-large {
+  font-size: 3rem; }
+  @media (max-width: 1200px) {
+    .font-size-xx-large {
+      font-size: calc(1.4rem + 2.13333vw) ; } }
+
+.font-size-xxx-large {
+  font-size: 4rem; }
+  @media (max-width: 1200px) {
+    .font-size-xxx-large {
+      font-size: calc(1.6rem + 3.2vw) ; } }
+
+.font-size-xxxx-large {
+  font-size: 6rem; }
+  @media (max-width: 1200px) {
+    .font-size-xxxx-large {
+      font-size: calc(2rem + 5.33333vw) ; } }
+
+.participants {
+  margin-top: 5rem; }
+  .participants .participant__image {
+    margin: 0 auto; }
+  .participants .participant:nth-child(even) {
+    background-color: #f2f2f2; }
 

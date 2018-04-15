@@ -4,7 +4,6 @@ using FiiPrezent.Hubs;
 using FiiPrezent.Interfaces;
 using FiiPrezent.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +31,6 @@ namespace FiiPrezent
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -61,6 +59,8 @@ namespace FiiPrezent
             services.AddTransient<IParticipantsService, ParticipantsService>();
             services.AddTransient<IEventsService, EventsService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -68,8 +68,11 @@ namespace FiiPrezent
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseAuthentication();
-
-            app.UseSignalR(routes => { routes.MapHub<UpdateParticipants>("/participants"); });
+            
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ParticipantsHub>("/participants");
+            });
 
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();

@@ -32,7 +32,7 @@ namespace FiiPrezent.Services
             await _unitOfWork.Participants.AddAsync(participant);
             await _unitOfWork.CompletedAsync();
 
-            var participants = (await _unitOfWork.Participants.GetAsync(x => x.EventId == @event.Id)).Select(x => x.Name).ToArray();
+            var participants = (await _unitOfWork.Participants.GetAsync(x => x.EventId == @event.Id)).ToList();
 
             _participantsUpdated.OnParticipantsUpdated(@event.Id, participants);
 

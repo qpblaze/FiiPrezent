@@ -1,0 +1,7 @@
+{
+  "name": "fii-prezent",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@aspnet/signalr": "^1.0.0-preview3-32231"
+  }
+}

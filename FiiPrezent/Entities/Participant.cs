@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 namespace FiiPrezent.Entities
 {
@@ -12,6 +13,7 @@ namespace FiiPrezent.Entities
 
         public Guid EventId { get; set; }
 
+        [IgnoreDataMember]
         [ForeignKey(nameof(EventId))]
         public Event Event { get; set; }
     }

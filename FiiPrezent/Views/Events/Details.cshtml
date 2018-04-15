@@ -9,24 +9,36 @@
 @section Scripts
     {
     <script>
-        var eventId = window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1);
-        var participantsList = document.getElementById("participants");
-        var connection = new signalR.HubConnection("/participants?eventId=" + eventId);
+        const connection = new signalR.HubConnection("/participants?eventId=@Model.Id", { logger: signalR.LogLevel.Information });
 
-        function appendParticipant(name) {
-            var li = document.createElement("li");
-            li.innerText = name;
-            participantsList.appendChild(li);
+        function appendParticipant(el) {
+            $('.participants').append(
+                $("<div />").addClass("columns participant is-vcentered").append(
+                    $("<div />").addClass("column is-2").append(
+                        $("<figure />").addClass("image is-128x128 participant__image").append(
+                            $("<img />").addClass("is-rounded").attr("src", el.ImagePath)
+                        )
+                    )
+                )
+                    .append(
+                    $("<div />").addClass("column is-5").text(el.Name)
+                    )
+                    .append(
+                    $("<div />").addClass("column is-5").text(el.Email)
+                    )
+            );
         }
 
         connection.on('Update', (list) => {
-            participantsList.innerHTML = "";
+            $(".participants").empty();
+
+            list = JSON.parse(list);
             list.forEach(function (el) {
-                appendParticipant(el);
+                appendParticipant(el)
             });
         });
 
-        connection.start();
+        connection.start().catch(err => console.error);
     </script>
 }
 
@@ -56,24 +68,24 @@
         <h2>@Model.Description</h2>
     </div>
     <div class="has-text-centered">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var p in Model.Participants)
-                {
-                    <tr>
-                        <td><img src="@p.ImagePath" /></td>
-                        <td>@p.Name</td>
-                        <td>@p.Email</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="participants">
+            @foreach (var p in Model.Participants)
+            {
+                <div class="columns participant is-vcentered">
+                    <div class="column is-2">
+                        <figure class="image is-128x128 participant__image">
+                            <img src="@p.ImagePath" class="is-rounded" />
+                        </figure>
+                    </div>
+                    <div class="column is-5">
+                        @p.Name
+                    </div>
+                    <div class="column is-5">
+
+                        @p.Email
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </div>

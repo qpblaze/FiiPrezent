@@ -1,0 +1,17 @@
+﻿@import "../base/_variables.scss";
+@import "../base/_typography.scss";
+@import "../base/_mixins.scss";
+
+.participants {
+    margin-top: 5rem;
+
+    .participant {
+        &__image {
+            margin: 0 auto;
+        }
+
+        &:nth-child(even) {
+            background-color: #f2f2f2
+        }
+    }
+}
