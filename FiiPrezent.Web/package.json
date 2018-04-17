@@ -1,0 +1,9 @@
+{
+  "name": "fii-prezent",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@aspnet/signalr": "^1.0.0-preview3-32231",
+    "bulma": "^0.7.0",
+    "bulma-calendar": "^1.3.0"
+  }
+}

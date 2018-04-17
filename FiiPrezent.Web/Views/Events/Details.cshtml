@@ -1,0 +1,94 @@
+﻿@model EventViewModel
+
+@{
+    ViewBag.Title = "Event";
+    Layout = "_Layout";
+}
+
+@section Scripts
+{
+    <script>
+        const connection = new signalR.HubConnection("/participants?eventId=@Model.Id",
+            { logger: signalR.LogLevel.Information });
+
+        function appendParticipant(el) {
+            $('.participants').append(
+                $("<div />").addClass("columns participant is-vcentered").append(
+                    $("<div />").addClass("column is-2").append(
+                        $("<figure />").addClass("image is-128x128 participant__image").append(
+                            $("<img />").addClass("is-rounded").attr("src", el.ImagePath)
+                        )
+                    )
+                )
+                .append(
+                    $("<div />").addClass("column is-5").text(el.Name)
+                )
+                .append(
+                    $("<div />").addClass("column is-5").text(el.Email)
+                )
+            );
+        }
+
+        connection.on('Update',
+            (list) => {
+                $(".participants").empty();
+
+                list = JSON.parse(list);
+                list.forEach(function(el) {
+                    appendParticipant(el);
+                });
+            });
+
+        connection.start().catch(console.error);
+    </script>
+}
+
+<section class="hero is-medium has-bg-img">
+    <img src="~/img/bg.jpg" class="is-bg-img"/>
+    <div class="hero-filter"></div>
+    <div class="hero-head">
+        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+    </div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title is-spaced">
+                Event details
+            </h1>
+            <h2 class="subtitle">
+                You're lucky to be here.
+            </h2>
+        </div>
+    </div>
+</section>
+
+<div class="container card-box">
+    <div class="card-box__title">
+        @Model.Name
+    </div>
+    <div class="card-box__subtitle">
+        <h2>@Model.Description</h2>
+    </div>
+    <div class="has-text-centered">
+        <div class="participants">
+
+            @foreach (var p in Model.Participants)
+            {
+                <div class="columns participant is-vcentered">
+                    <div class="column is-2">
+                        <figure class="image is-128x128 participant__image">
+                            <img src="@p.ImagePath" class="is-rounded"/>
+                        </figure>
+                    </div>
+                    <div class="column is-5">
+                        @p.Name
+                    </div>
+                    <div class="column is-5">
+
+                        @p.Email
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@using FiiPrezent.Web.Models
+@model FiiPrezent.Web.Models.CreateEventViewModel
+
+@{
+    ViewData["Title"] = "Log In";
+}
+
+<section class="hero is-medium has-bg-img">
+    <img src="~/img/bg.jpg" class="is-bg-img" />
+    <div class="hero-filter"></div>
+    <div class="hero-head">
+        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+    </div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title is-spaced">
+                Log In
+            </h1>
+            <h2 class="subtitle">
+                If you want to take part to an event or create one you have to log in.<br />
+                You can only log in with facebook (we have some lazy developers).
+            </h2>
+        </div>
+    </div>
+</section>
+
+<div class="container card-box">
+    <div class="card-box__title">
+        I wonder how will you log in..
+    </div>
+    <div class="has-text-centered">
+
+        <form asp-action="FacebookLogIn">
+            <div class="columns">
+                <div class="column">
+                    <a class="button is-medium button--facebook" onclick="$(this).closest('form').submit()">
+                        <span class="icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </span>
+                        <span>Facebook</span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

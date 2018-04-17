@@ -1,0 +1,28 @@
+﻿@import "../base/_variables.scss";
+@import "../base/_typography.scss";
+@import "../base/_mixins.scss";
+
+.card-box {
+    @include box_shadow(2);
+    padding: 50px 30px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 3rem;
+
+    @media(min-width: 767px) {
+        margin-top: -75px;
+    }
+
+    &__title {
+        text-align: center;
+        margin-bottom: 2rem;
+        @include rfs(30);
+        color: $font-color-theme;
+    }
+
+    &__subtitle {
+        text-align: center;
+        margin-bottom: 2rem;
+        @include rfs(20);
+    }
+}

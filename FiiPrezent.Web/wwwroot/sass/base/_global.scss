@@ -1,0 +1,44 @@
+﻿@import "_variables.scss";
+@import "_typography.scss";
+@import "_mixins.scss";
+
+body {
+    font-family: $font-family-text;
+}
+
+.has-bg-img {
+    .is-bg-img {
+        // js does the work
+        // this is for intellisense
+    }
+}
+
+#index {
+    .title {
+        font-weight: 800;
+    }
+}
+
+.hero {
+    background-size: cover;
+    position: relative;
+    overflow: visible;
+
+    .hero-filter {
+        background: linear-gradient($color-secondary, $color-primary);
+        opacity: .8;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+
+    .title {
+        color: $font-color-light;
+        @include rfs(48);
+    }
+
+    .subtitle {
+        color: $font-color-light;
+        @include rfs(24);
+    }
+}

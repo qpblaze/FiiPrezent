@@ -1,0 +1,20 @@
+﻿@import "../base/_variables.scss";
+@import "../base/_typography.scss";
+
+.navbar {
+    background-color: transparent;
+    padding-top: 2rem;
+    box-shadow: none;
+
+    .navbar-item {
+        @include rfs(14);
+        text-transform: lowercase;
+        color: $font-color-light;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, .1);
+            color: $font-color-light;
+            border-radius: 5px;
+        }
+    }
+}

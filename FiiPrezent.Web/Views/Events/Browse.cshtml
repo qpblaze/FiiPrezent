@@ -1,0 +1,120 @@
+﻿@using FiiPrezent.Web.Helpers
+@using FiiPrezent.Web.Models
+@model FiiPrezent.Web.Models.BrowseViewModel
+
+@{
+    ViewData["Title"] = "Browse";
+}
+
+@section Styles {
+    <link href="~/lib/bulma-calendar/dist/bulma-calendar.min.css" rel="stylesheet" /> 
+}
+
+@section Scripts {
+    <script src="~/lib/bulma-calendar/dist/bulma-calendar.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var datePicker = new bulmaCalendar(document.getElementById('Filter_Date'), {
+                overlay: true,
+                closeOnSelect: true,
+                dateFormat: 'dd.mm.yyyy'
+            });
+        });
+    </script>
+}
+
+<section class="hero is-medium has-bg-img">
+    <img src="~/img/bg.jpg" class="is-bg-img" />
+    <div class="hero-filter"></div>
+    <div class="hero-head">
+        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+    </div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title is-spaced">
+                Browse events
+            </h1>
+            <h2 class="subtitle">
+                You can look at them. You can see where they are. You can see who is comming.<br />
+                But you can't go unless you have the code.
+            </h2>
+        </div>
+    </div>
+</section>
+
+<div class="container card-box">
+    <div class="card-box__title">
+        Where would you like to go?
+    </div>
+    <form method="post">
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <div class="control">
+                        <input asp-for="Filter.Name" class="input is-medium" placeholder="title">
+                    </div>
+
+                    <span class="has-text-danger"></span>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <div class="control">
+                        <input asp-for="Filter.Location" class="input is-medium" placeholder="location">
+                    </div>
+
+                    <span class="has-text-danger"></span>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <div class="control">
+                        <input asp-for="Filter.Date" class="input is-medium" placeholder="date">
+                    </div>
+
+                    <span class="has-text-danger"></span>
+                </div>
+            </div>
+            <div class="column is-2">
+                <div class="field">
+                    <button class="button is-primary is-medium is-fullwidth">search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div class="columns is-multiline is-mobile">
+        @foreach (var item in Model.Events)
+        {
+            <div class="column is-one-third-desktop is-half-tablet is-half-mobile">
+                <div class="event">
+                    <figure class="image">
+                        <img src="@item.ImagePath">
+                    </figure>
+                    <div class="event__content">
+                        <div class="event__name">@item.Name</div>
+                        <div class="event__description">@item.Description</div>
+                        <div class="event__date">@item.Date.ToString()</div>
+                        <div class="event__location">@item.Location</div>
+                    </div>
+                    <div class="event__actions">
+                        <div class="action-item">
+                            <a asp-action="Details" asp-controller="Events" asp-route-id="@item.Id" class="btn btn-action"><i class="fa fa-eye"></i></a>
+                        </div>
+                        @if (User.GetNameIdentifier() == item.AccountId)
+                        {
+
+                            <div class="action-item">
+                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                                    <a onclick="$(this).closest('form').submit()" class="btn btn-action"><i class="fa fa-times"></i></a>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

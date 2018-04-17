@@ -1,47 +1,67 @@
-using Microsoft.AspNetCore.SignalR;
-using FiiPrezent.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using FiiPrezent.Core;
+using FiiPrezent.Core.Entities;
+using FiiPrezent.Core.Interfaces;
+using FiiPrezent.Infrastructure.Services;
+using Moq;
 using Shouldly;
 using Xunit;
-using Moq;
-using FiiPrezent.Hubs;
-using FiiPrezent.Interfaces;
 
 namespace FiiPrezent.Tests
 {
     public class EventsServiceTests
     {
-        private readonly EventsService _service;
-
         public EventsServiceTests()
         {
-            var participantsUpdated = new Mock<IParticipantsUpdated>();
-            var unitOfWork = new Mock<IUnitOfWork>();
-            
-            _service = new EventsService(participantsUpdated.Object, unitOfWork.Object);
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+
+            _eventRepositoryMock = new Mock<IRepository<Event>>();
+
+            unitOfWorkMock.Setup(x => x.Events).Returns(_eventRepositoryMock.Object);
+
+            _eventsService = new EventsService(unitOfWorkMock.Object);
+        }
+
+        private readonly Mock<IRepository<Event>> _eventRepositoryMock;
+        private readonly IEventsService _eventsService;
+
+        [Fact]
+        public async void CreateEventAsync_WhenCodeIsTaken_ReturnsError()
+        {
+            // TODO: nu merge cu expresii exacte (x => x.SecretCode == "code")
+            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>()))
+                .ReturnsAsync(() => new List<Event>
+                {
+                    new Event()
+                });
+
+            var result = await _eventsService.CreateEventAsync(
+                new Event
+                {
+                    SecretCode = "code"
+                }
+            );
+
+            result.Type.ShouldBe(ResultStatusType.InvalidCode);
         }
 
         [Fact]
-        public void RegisterParticipant_WithAnInvalidCode_ReturnsError()
+        public async void CreateEventAsync_WhenTheCodeIsValid_ReturnsNoError()
         {
-           // var result = _service.RegisterParticipantAsync("bad code", "test participant");
+            // TODO: nu merge cu expresii exacte (x => x.SecretCode == "code")
+            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>()))
+                .ReturnsAsync(() => new List<Event>());
 
-           // result.ShouldBeNull();
-        }
+            var result = await _eventsService.CreateEventAsync(
+                new Event
+                {
+                    SecretCode = "code"
+                }
+            );
 
-        [Fact]
-        public void RegisterParticipant_WithAValidCode_ReturnsSuccess()
-        {
-            //var result = _service.RegisterParticipantAsync("cometothedarksidewehavecookies", "test participant");
-
-           // result.ShouldNotBeNull();
-        }
-
-        [Fact]
-        public void RegisterParticipant_WithAValidCode_AddsParticipantToEvent()
-        {
-            //var result = _service.RegisterParticipantAsync("cometothedarksidewehavecookies", "Tudor");
-
-           // result.Participants.ShouldContain("Tudor");
+            result.Type.ShouldBe(ResultStatusType.Ok);
         }
     }
 }
