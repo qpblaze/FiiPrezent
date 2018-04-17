@@ -320,4 +320,4 @@ ASALocalRun/
 *.binlog
 
 
-FiiPrezent/secrets\.json
+FiiPrezent.Web/secrets\.json
