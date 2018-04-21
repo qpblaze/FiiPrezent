@@ -10,14 +10,17 @@ namespace FiiPrezent.Infrastructure.Services
     public class ParticipantsService : IParticipantsService
     {
         private readonly IParticipantsUpdated _participantsUpdated;
+        private readonly IAccountsService _accountsService;
         private readonly IUnitOfWork _unitOfWork;
 
         public ParticipantsService(
             IParticipantsUpdated participantsUpdated,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork, 
+            IAccountsService accountsService)
         {
             _participantsUpdated = participantsUpdated;
             _unitOfWork = unitOfWork;
+            _accountsService = accountsService;
         }
 
         public async Task<ResultStatus> RegisterParticipantAsync(string code, string nameIdentifier)
@@ -34,7 +37,7 @@ namespace FiiPrezent.Infrastructure.Services
             {
                 Id = Guid.NewGuid(),
                 Event = @event,
-                Account = (await _unitOfWork.Accounts.GetAsync(x => x.NameIdentifier == nameIdentifier)).SingleOrDefault()
+                Account = await _accountsService.GetAccountByNameIdentifier(nameIdentifier)
             };
 
             await _unitOfWork.Participants.AddAsync(participant);

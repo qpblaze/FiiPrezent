@@ -10,11 +10,10 @@
 .button--facebook {
     background-color: #4267b2;
     color: $font-color-light;
-    @include box_shadow(1);
     border: none;
 
     &:hover {
         color: $font-color-light;
-        @include box_shadow(2);
+        background-color: #3e61a8;
     }
 }
