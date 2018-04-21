@@ -66,6 +66,7 @@ namespace FiiPrezent.Core
         Ok,
         NotFound,
         InvalidCode,
-        CodeAlreadyInUse
+        AlreadyExists,
+        AlreadyGoing
     }
 }

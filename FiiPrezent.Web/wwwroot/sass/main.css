@@ -78,7 +78,8 @@
       font-size: calc(2rem + 5.33333vw) ; } }
 
 body {
-  font-family: "Montserrat", sans-serif; }
+  font-family: "Montserrat", sans-serif;
+  background-color: #FBFBFD; }
 
 #index .title {
   font-weight: 800; }
@@ -105,6 +106,9 @@ body {
     @media (max-width: 1200px) {
       .hero .subtitle {
         font-size: calc(1.1rem + 0.53333vw) ; } }
+
+.has-background {
+  background-color: #FBFBFD; }
 
 .font-size-small {
   font-size: 0.75rem; }
@@ -203,6 +207,17 @@ body {
       background-color: rgba(0, 0, 0, 0.1);
       color: #FCFCFC;
       border-radius: 5px; }
+  @media (max-width: 1087px) {
+    .navbar .navbar-menu {
+      background-color: transparent;
+      box-shadow: none; }
+    .navbar .navbar-item {
+      padding-top: 15px;
+      padding-bottom: 15px; }
+      .navbar .navbar-item:hover {
+        border-radius: 0; } }
+  .navbar .navbar-burger {
+    color: #FCFCFC; }
 
 .font-size-small {
   font-size: 0.75rem; }
@@ -374,7 +389,8 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     font-size: 1.875rem;
-    color: #660066; }
+    color: #660066;
+    font-weight: 600; }
     @media (max-width: 1200px) {
       .card-box__title {
         font-size: calc(1.175rem + 0.93333vw) ; } }

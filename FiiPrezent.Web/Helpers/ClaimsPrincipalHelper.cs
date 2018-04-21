@@ -15,6 +15,11 @@ namespace FiiPrezent.Web.Helpers
             return claimsPrincipal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
         }
 
+        public static string GetName(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+        }
+
         public static string GetProfileImage(this ClaimsPrincipal claimsPrincipal)
         {
             string identifier = claimsPrincipal.GetNameIdentifier();

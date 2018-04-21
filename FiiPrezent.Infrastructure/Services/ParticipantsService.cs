@@ -20,15 +20,22 @@ namespace FiiPrezent.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ResultStatus> RegisterParticipantAsync(string code, Participant participant)
+        public async Task<ResultStatus> RegisterParticipantAsync(string code, string nameIdentifier)
         {
             var @event = (await _unitOfWork.Events.GetAsync(e => e.SecretCode == code)).SingleOrDefault();
 
             if (@event == null)
-                return new ResultStatus(ResultStatusType.CodeAlreadyInUse, "SecretCode", "Wrong verification code.");
+                return new ResultStatus(ResultStatusType.AlreadyExists, "Code", "Wrong verification code.");
 
-            participant.Id = Guid.NewGuid();
-            participant.Event = @event;
+            if((await _unitOfWork.Participants.GetAsync(x => x.Account.NameIdentifier == nameIdentifier)).Any())
+                return new ResultStatus(ResultStatusType.AlreadyGoing, "Code", "You are already going to this event.");
+
+            Participant participant = new Participant
+            {
+                Id = Guid.NewGuid(),
+                Event = @event,
+                Account = (await _unitOfWork.Accounts.GetAsync(x => x.NameIdentifier == nameIdentifier)).SingleOrDefault()
+            };
 
             await _unitOfWork.Participants.AddAsync(participant);
             await _unitOfWork.CompletedAsync();

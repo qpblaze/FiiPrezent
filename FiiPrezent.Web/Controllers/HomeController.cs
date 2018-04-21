@@ -43,16 +43,8 @@ namespace FiiPrezent.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-
-            var participant = new Participant
-            {
-                NameIdentifier = User.GetNameIdentifier(),
-                Name = User.Identity.Name,
-                ImagePath = User.GetProfileImage(),
-                Email = User.GetEmail()
-            };
-
-            var result = await _participantsService.RegisterParticipantAsync(model.Code, participant);
+            
+            var result = await _participantsService.RegisterParticipantAsync(model.Code, User.GetNameIdentifier());
 
             if (result.Type != ResultStatusType.Ok)
             {

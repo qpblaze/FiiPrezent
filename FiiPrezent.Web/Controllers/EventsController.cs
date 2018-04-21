@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FiiPrezent.Core;
 using FiiPrezent.Core.Entities;
 using FiiPrezent.Core.Interfaces;
+using FiiPrezent.Web.Helpers;
 using FiiPrezent.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +54,7 @@ namespace FiiPrezent.Web.Controllers
                 events = events.Where(x => x.Location.ToLower().Contains(model.Filter.Location));
 
             if (!string.IsNullOrEmpty(model.Filter.Date))
-                events = events.Where(x => x.Date.ToString(CultureInfo.InvariantCulture).Contains(model.Filter.Date));
+                events = events.Where(x => x.Date.ToString().Contains(model.Filter.Date));
 
             model.Events = events.Select(x => new BrowseEventViewModel(x));
 
@@ -78,7 +78,6 @@ namespace FiiPrezent.Web.Controllers
 
             var @event = new Event
             {
-                AccountId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value,
                 Name = model.Name,
                 ImagePath = model.ImagePath ?? "/img/event-placeholder.jpg",
                 Description = model.Description,
@@ -87,7 +86,7 @@ namespace FiiPrezent.Web.Controllers
                 Date = model.Date
             };
 
-            var result = await _eventsService.CreateEventAsync(@event);
+            var result = await _eventsService.CreateEventAsync(@event, User.GetNameIdentifier());
 
             if (result.Type != ResultStatusType.Ok)
             {

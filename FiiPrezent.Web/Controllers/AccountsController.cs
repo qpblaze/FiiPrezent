@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FiiPrezent.Core.Entities;
+using FiiPrezent.Core.Interfaces;
+using FiiPrezent.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +11,15 @@ namespace FiiPrezent.Web.Controllers
 {
     public class AccountsController : Controller
     {
+        private readonly IAccountsService _accountsService;
+
+        public AccountsController(IAccountsService accountsService)
+        {
+            _accountsService = accountsService;
+        }
+
         [Route("login")]
-        public IActionResult LogIn(string returnUrl)
+        public IActionResult LogIn(string returnUrl = "/")
         {
             TempData["returnUrl"] = returnUrl;
 
@@ -26,18 +36,31 @@ namespace FiiPrezent.Web.Controllers
 
         public IActionResult FacebookLogIn()
         {
-            string returnUrl = Convert.ToString(TempData["returnUrl"]);
-            if (string.IsNullOrEmpty(returnUrl))
-            {
-                returnUrl = Url.Action("Index", "Home");
-            }
-
             var authProperties = new AuthenticationProperties
             {
-                RedirectUri = returnUrl
+                RedirectUri = Url.Action(nameof(CheckLogIn), "Accounts")
             };
 
             return Challenge(authProperties, "Facebook");
+        }
+
+        public async Task<IActionResult> CheckLogIn()
+        {
+            if (!(await _accountsService.Exists(User.GetNameIdentifier())))
+            {
+                Account account = new Account
+                {
+                    Id = Guid.NewGuid(),
+                    NameIdentifier = User.GetNameIdentifier(),
+                    Name = User.GetName(),
+                    Email = User.GetEmail(),
+                    Picture = User.GetProfileImage()
+                };
+
+                await _accountsService.CreateAccount(account);
+            }
+
+            return Redirect(TempData["returnUrl"].ToString());
         }
     }
 }

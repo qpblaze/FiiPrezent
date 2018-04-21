@@ -4,17 +4,41 @@
 .navbar {
     background-color: transparent;
     padding-top: 2rem;
+
+        .navbar-item {
+            @include rfs(14);
+            text-transform: lowercase;
+            color: $font-color-light;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, .1);
+                color: $font-color-light;
+                border-radius: 5px;
+            }
+        }
+    
+
+    @media(max-width: 1087px) {
+        .navbar-menu {
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        .navbar-item {
+            padding-top: 15px;
+            padding-bottom: 15px;
+
+            &:hover {
+                border-radius: 0;
+            }
+        }
+    }
+
     box-shadow: none;
 
-    .navbar-item {
-        @include rfs(14);
-        text-transform: lowercase;
-        color: $font-color-light;
 
-        &:hover {
-            background-color: rgba(0, 0, 0, .1);
-            color: $font-color-light;
-            border-radius: 5px;
-        }
+
+    .navbar-burger {
+        color: $font-color-light;
     }
 }

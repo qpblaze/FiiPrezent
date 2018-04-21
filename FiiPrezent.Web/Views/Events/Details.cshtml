@@ -16,15 +16,15 @@
                 $("<div />").addClass("columns participant is-vcentered").append(
                     $("<div />").addClass("column is-2").append(
                         $("<figure />").addClass("image is-128x128 participant__image").append(
-                            $("<img />").addClass("is-rounded").attr("src", el.ImagePath)
+                            $("<img />").addClass("is-rounded").attr("src", el.Account.Picture)
                         )
                     )
                 )
                 .append(
-                    $("<div />").addClass("column is-5").text(el.Name)
+                    $("<div />").addClass("column is-5").text(el.Account.Name)
                 )
                 .append(
-                    $("<div />").addClass("column is-5").text(el.Email)
+                    $("<div />").addClass("column is-5").text(el.Account.Email)
                 )
             );
         }
@@ -76,7 +76,7 @@
                 <div class="columns participant is-vcentered">
                     <div class="column is-2">
                         <figure class="image is-128x128 participant__image">
-                            <img src="@p.ImagePath" class="is-rounded"/>
+                            <img src="@p.Picture" class="is-rounded"/>
                         </figure>
                     </div>
                     <div class="column is-5">

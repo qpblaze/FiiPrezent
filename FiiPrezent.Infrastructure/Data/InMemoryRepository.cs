@@ -22,7 +22,7 @@ namespace FiiPrezent.Infrastructure.Data
             );
         }
 
-        public Task<ICollection<TEntity>> ListAllAsync()
+        public Task<ICollection<TEntity>> ListAllAsync(Expression<Func<TEntity, object>> include)
         {
             throw new NotImplementedException();
         }

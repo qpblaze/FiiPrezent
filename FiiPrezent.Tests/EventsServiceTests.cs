@@ -41,7 +41,8 @@ namespace FiiPrezent.Tests
                 new Event
                 {
                     SecretCode = "code"
-                }
+                }, 
+                Guid.NewGuid().ToString()
             );
 
             result.Type.ShouldBe(ResultStatusType.InvalidCode);
@@ -58,7 +59,8 @@ namespace FiiPrezent.Tests
                 new Event
                 {
                     SecretCode = "code"
-                }
+                },
+                Guid.NewGuid().ToString()
             );
 
             result.Type.ShouldBe(ResultStatusType.Ok);

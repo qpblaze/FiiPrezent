@@ -4,6 +4,7 @@
 
 body {
     font-family: $font-family-text;
+    background-color: #FBFBFD;
 }
 
 .has-bg-img {
@@ -41,4 +42,8 @@ body {
         color: $font-color-light;
         @include rfs(24);
     }
+}
+
+.has-background {
+    background-color: #FBFBFD;
 }

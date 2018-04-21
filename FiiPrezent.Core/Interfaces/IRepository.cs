@@ -10,7 +10,7 @@ namespace FiiPrezent.Core.Interfaces
     {
         Task<TEntity> GetByIdAsync(Guid id);
 
-        Task<ICollection<TEntity>> ListAllAsync();
+        Task<ICollection<TEntity>> ListAllAsync(Expression<Func<TEntity, object>> include);
 
         Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate);
         

@@ -47,9 +47,9 @@ namespace FiiPrezent.Tests
             _participantRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Participant, bool>>>()))
                 .ReturnsAsync(() => new List<Participant>());
 
-            var result = await _participantsService.RegisterParticipantAsync("code", new Participant());
+            var result = await _participantsService.RegisterParticipantAsync("code", "");
 
-            result.Type.ShouldBe(ResultStatusType.CodeAlreadyInUse);
+            result.Type.ShouldBe(ResultStatusType.AlreadyExists);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace FiiPrezent.Tests
 
             var participant = new Participant();
 
-            var result = await _participantsService.RegisterParticipantAsync("code", participant);
+            var result = await _participantsService.RegisterParticipantAsync("code", "");
 
             result.Type.ShouldBe(ResultStatusType.Ok);
         }

@@ -53,10 +53,14 @@ namespace FiiPrezent.Web
 
             services.AddScoped<IParticipantsUpdated, ParticipantsUpdated>();
 
-            services.AddTransient<IRepository<Event>, EfRepository<Event>>();
             services.AddTransient<IRepository<Participant>, EfRepository<Participant>>();
+            services.AddTransient<IRepository<Event>, EfRepository<Event>>();
+            services.AddTransient<IRepository<Account>, EfRepository<Account>>();
+
             services.AddTransient<IParticipantsService, ParticipantsService>();
             services.AddTransient<IEventsService, EventsService>();
+            services.AddTransient<IAccountsService, AccountsService>();
+
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             
             services.AddSignalR();

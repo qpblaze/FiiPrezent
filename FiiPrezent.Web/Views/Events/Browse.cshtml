@@ -7,7 +7,7 @@
 }
 
 @section Styles {
-    <link href="~/lib/bulma-calendar/dist/bulma-calendar.min.css" rel="stylesheet" /> 
+    <link href="~/lib/bulma-calendar/dist/bulma-calendar.min.css" rel="stylesheet" />
 }
 
 @section Scripts {
@@ -84,37 +84,40 @@
     </form>
 </div>
 
-<div class="container">
-    <div class="columns is-multiline is-mobile">
-        @foreach (var item in Model.Events)
-        {
-            <div class="column is-one-third-desktop is-half-tablet is-half-mobile">
-                <div class="event">
-                    <figure class="image">
-                        <img src="@item.ImagePath">
-                    </figure>
-                    <div class="event__content">
-                        <div class="event__name">@item.Name</div>
-                        <div class="event__description">@item.Description</div>
-                        <div class="event__date">@item.Date.ToString()</div>
-                        <div class="event__location">@item.Location</div>
-                    </div>
-                    <div class="event__actions">
-                        <div class="action-item">
-                            <a asp-action="Details" asp-controller="Events" asp-route-id="@item.Id" class="btn btn-action"><i class="fa fa-eye"></i></a>
-                        </div>
-                        @if (User.GetNameIdentifier() == item.AccountId)
-                        {
 
+<div class="container">
+        <div class="columns is-multiline">
+            @foreach (var item in Model.Events)
+            {
+                <div class="column is-4">
+                    <div class="event">
+                        <figure class="image">
+                            <img src="@item.ImagePath">
+                        </figure>
+                        <div class="event__content">
+                            <h2 class="title is-4 is-spaced">@item.Name</h2>
+                            <p class="subtitle is-5">@item.Description</p>
+                            <div class="event__date">@item.Date.ToShortDateString()</div>
+                            <div class="event__location">@item.Location</div>
+                        </div>
+                        <div class="event__actions">
                             <div class="action-item">
-                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@item.Id" method="post">
-                                    <a onclick="$(this).closest('form').submit()" class="btn btn-action"><i class="fa fa-times"></i></a>
-                                </form>
+                                <a asp-action="Details" asp-controller="Events" asp-route-id="@item.Id" class="btn btn-action"><i class="fa fa-eye"></i></a>
                             </div>
-                        }
+                            @if (User.GetNameIdentifier() == item.AccountId)
+                            {
+
+                                <div class="action-item">
+                                    <form asp-controller="Events" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                                        <a onclick="$(this).closest('form').submit()" class="btn btn-action"><i class="fa fa-times"></i></a>
+                                    </form>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-</div>
+
+

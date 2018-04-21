@@ -6,13 +6,13 @@ namespace FiiPrezent.Web.Models
     {
         public ParticipantViewModel(Participant participant)
         {
-            Name = participant.Name;
-            Email = participant.Email;
-            ImagePath = participant.ImagePath;
+            Name = participant.Account.Name;
+            Email = participant.Account.Email;
+            Picture = participant.Account.Picture;
         }
 
         public string Name { get; set; }
         public string Email { get; set; }
-        public string ImagePath { get; set; }
+        public string Picture { get; set; }
     }
 }

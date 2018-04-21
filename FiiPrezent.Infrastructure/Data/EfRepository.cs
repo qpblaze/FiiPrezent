@@ -29,9 +29,9 @@ namespace FiiPrezent.Infrastructure.Data
             return await _context.Set<TEntity>().FindAsync(id);
         }
 
-        public async Task<ICollection<TEntity>> ListAllAsync()
+        public async Task<ICollection<TEntity>> ListAllAsync(Expression<Func<TEntity, object>> include = null)
         {
-            return await _context.Set<TEntity>().ToListAsync();
+            return await _context.Set<TEntity>().Include(include).ToListAsync();
         }
 
         public async Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)

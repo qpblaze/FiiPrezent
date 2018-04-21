@@ -11,8 +11,9 @@ namespace FiiPrezent.Core.Interfaces
         ///     Adds an event to the storage.
         /// </summary>
         /// <param name="event">The event to be added.</param>
+        /// <param name="nameIdentifier"></param>
         /// <returns>Success = true if the event was created, a list of errors otherwise. </returns>
-        Task<ResultStatus> CreateEventAsync(Event @event);
+        Task<ResultStatus> CreateEventAsync(Event @event, string nameIdentifier);
 
         /// <summary>
         ///     Gets all events from the storage.

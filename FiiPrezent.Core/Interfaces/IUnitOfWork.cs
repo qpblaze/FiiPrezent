@@ -8,7 +8,8 @@ namespace FiiPrezent.Core.Interfaces
     {
         IRepository<Event> Events { get; }
         IRepository<Participant> Participants { get; }
-        
+        IRepository<Account> Accounts { get; }
+
         Task CompletedAsync();
     }
 }
