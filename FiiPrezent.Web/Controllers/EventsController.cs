@@ -109,7 +109,6 @@ namespace FiiPrezent.Web.Controllers
         }
 
         [HttpPost]
-        [Route("event")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _eventsService.DeleteEvent(id);

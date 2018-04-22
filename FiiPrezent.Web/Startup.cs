@@ -1,4 +1,5 @@
-﻿using FiiPrezent.Core.Entities;
+﻿using System.Globalization;
+using FiiPrezent.Core.Entities;
 using FiiPrezent.Core.Interfaces;
 using FiiPrezent.Infrastructure;
 using FiiPrezent.Infrastructure.Data;
@@ -36,7 +37,13 @@ namespace FiiPrezent.Web
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 options.Filters.Add(new RequireHttpsAttribute());
+
             });
+
+            var cultureInfo = new CultureInfo("ro-RO");
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             services.AddDbContext<ApplicationDbContext>(optiions =>
             {

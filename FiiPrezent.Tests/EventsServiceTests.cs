@@ -39,13 +39,7 @@ namespace FiiPrezent.Tests
                     new Event()
                 });
 
-            var result = await _eventsService.CreateEventAsync(
-                new Event
-                {
-                    SecretCode = "code"
-                }, 
-                Guid.NewGuid().ToString()
-            );
+            var result = await _eventsService.CreateEventAsync(new Event(), "nameIdentifier");
 
             result.Type.ShouldBe(ResultStatusType.InvalidCode);
         }
@@ -60,13 +54,7 @@ namespace FiiPrezent.Tests
             _accountsServiceMock.Setup(x => x.GetAccountByNameIdentifier(It.IsAny<string>()))
                 .ReturnsAsync(() => new Account());
 
-            var result = await _eventsService.CreateEventAsync(
-                new Event
-                {
-                    SecretCode = "code"
-                },
-                Guid.NewGuid().ToString()
-            );
+            var result = await _eventsService.CreateEventAsync(new Event(), "nameIdentifier");
 
             result.Type.ShouldBe(ResultStatusType.Ok);
         }

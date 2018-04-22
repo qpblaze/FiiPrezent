@@ -60,6 +60,11 @@ namespace FiiPrezent.Infrastructure.Services
             if (@event == null)
                 return new ResultStatus(ResultStatusType.NotFound);
 
+            foreach (var participant in (await _unitOfWork.Participants.GetAsync(x => x.EventId == @event.Id)))
+            {
+                _unitOfWork.Participants.Delete(participant);
+            }
+
             _unitOfWork.Events.Delete(@event);
 
             await _unitOfWork.CompletedAsync();

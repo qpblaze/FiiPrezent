@@ -30,7 +30,7 @@ namespace FiiPrezent.Infrastructure.Services
             if (@event == null)
                 return new ResultStatus(ResultStatusType.AlreadyExists, "Code", "Wrong verification code.");
 
-            if((await _unitOfWork.Participants.GetAsync(x => x.Account.NameIdentifier == nameIdentifier)).Any())
+            if((await _unitOfWork.Participants.GetAsync(x => x.Account.NameIdentifier == nameIdentifier && x.EventId == @event.Id)).Any())
                 return new ResultStatus(ResultStatusType.AlreadyGoing, "Code", "You are already going to this event.");
 
             Participant participant = new Participant

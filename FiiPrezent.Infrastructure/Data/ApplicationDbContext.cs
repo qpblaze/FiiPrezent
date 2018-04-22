@@ -26,16 +26,22 @@ namespace FiiPrezent.Infrastructure.Data
                 .HasMany(a => a.Events)
                 .WithOne(e => e.Account)
                 .OnDelete(DeleteBehavior.Cascade);
+                
+
+            modelBuilder.Entity<Participant>()
+                .HasKey(x => new { x.AccountId, x.EventId });
 
             modelBuilder.Entity<Participant>()
                 .HasOne(p => p.Event)
                 .WithMany(e => e.Participants)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .HasForeignKey(p => p.EventId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Participant>()
                 .HasOne(p => p.Account)
                 .WithMany(a => a.Participants)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .HasForeignKey(p => p.AccountId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
