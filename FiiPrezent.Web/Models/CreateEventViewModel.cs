@@ -7,19 +7,16 @@ namespace FiiPrezent.Web.Models
     public class CreateEventViewModel
     {
         [Required(ErrorMessage = "Please enter the name of the event.")]
-        [MaxLength(30)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please enter the description.")]
-        [MaxLength(100)]
         public string Description { get; set; }
 
         [DisplayName("Secret Code")]
         [Required(ErrorMessage = "Please enter the secret code.")]
         public string SecretCode { get; set; }
 
-        [Required(ErrorMessage = "Please enter the location.")] 
-        [MaxLength(20)]
+        [Required(ErrorMessage = "Please enter the location.")]
         public string Location { get; set; }
 
         [DisplayName("Image Link")]

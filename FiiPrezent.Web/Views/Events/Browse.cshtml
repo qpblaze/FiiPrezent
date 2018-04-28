@@ -5,27 +5,29 @@
 }
 
 @section Styles {
-    <link href="~/lib/bulma-calendar/dist/bulma-calendar.min.css" rel="stylesheet" />
+    <link href="~/lib/bulma-calendar/dist/bulma-calendar.min.css" rel="stylesheet"/>
 }
 
 @section Scripts {
     <script src="~/lib/bulma-calendar/dist/bulma-calendar.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var datePicker = new bulmaCalendar(document.getElementById('Filter_Date'), {
-                overlay: true,
-                closeOnSelect: true,
-                dateFormat: 'dd.mm.yyyy'
+        document.addEventListener('DOMContentLoaded',
+            function() {
+                var datePicker = new bulmaCalendar(document.getElementById('Filter_Date'),
+                    {
+                        overlay: true,
+                        closeOnSelect: true,
+                        dateFormat: 'dd.mm.yyyy'
+                    });
             });
-        });
     </script>
 }
 
 <section class="hero is-medium has-bg-img">
-    <img src="~/img/bg.jpg" class="is-bg-img" />
+    <img src="~/img/bg.jpg" class="is-bg-img"/>
     <div class="hero-filter"></div>
     <div class="hero-head">
-        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+        @Html.Partial("_NavigationPartial")
     </div>
     <div class="hero-body">
         <div class="container has-text-centered">
@@ -33,7 +35,7 @@
                 Browse events
             </h1>
             <h2 class="subtitle">
-                You can look at them. You can see where they are. You can see who is comming.<br />
+                You can look at them. You can see where they are. You can see who is comming.<br/>
                 But you can't go unless you have the code.
             </h2>
         </div>
@@ -87,36 +89,9 @@
     <div class="columns is-multiline">
         @foreach (var item in Model.Events)
         {
-            <div class="column is-4">
-                <div class="event">
-                    <figure class="image">
-                        <img src="@item.ImagePath">
-                    </figure>
-                    <div class="event__content">
-                        <h2 class="title is-4 is-spaced">@item.Name</h2>
-                        <p class="subtitle is-5">@item.Description</p>
-                        <div class="event__date">@item.Date.ToShortDateString()</div>
-                        <div class="event__location">@item.Location</div>
-                    </div>
-                    <div class="event__actions">
-                        <div class="action-item">
-                            <a asp-action="Details" asp-controller="Events" asp-route-id="@item.Id" class="btn btn-action"><i class="fa fa-eye"></i></a>
-                        </div>
-                        @if (User.GetNameIdentifier() == item.AccountId)
-                        {
-                            <div class="action-item">
-                                <a asp-action="Update" asp-controller="Events" asp-route-id="@item.Id" class="btn btn-action"><i class="fa fa-edit"></i></a>
-                            </div>
-                            <div class="action-item">
-                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@item.Id" method="post">
-                                    <a onclick="$(this).closest('form').submit()" class="btn btn-action"><i class="fa fa-times"></i></a>
-                                </form>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
+            @Html.Partial("_EventPartial", item);
         }
+
     </div>
 </div>
 

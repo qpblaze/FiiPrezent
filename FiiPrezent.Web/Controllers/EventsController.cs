@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -36,7 +37,7 @@ namespace FiiPrezent.Web.Controllers
 
             var model = new BrowseViewModel
             {
-                Events = events.Select(x => new BrowseEventViewModel(x)),
+                Events = _mapper.Map<IEnumerable<Event>, IEnumerable<BrowseEventViewModel>>(events),
                 Filter = new FilterEventsViewModel()
             };
 
@@ -58,7 +59,7 @@ namespace FiiPrezent.Web.Controllers
             if (!string.IsNullOrEmpty(model.Filter.Date))
                 events = events.Where(x => x.Date.ToString().Contains(model.Filter.Date));
 
-            model.Events = events.Select(x => new BrowseEventViewModel(x));
+            model.Events = _mapper.Map<IEnumerable<Event>, IEnumerable<BrowseEventViewModel>>(events);
 
             return View(model);
         }
@@ -96,7 +97,7 @@ namespace FiiPrezent.Web.Controllers
         [Route("update")]
         public async Task<IActionResult> Update(Guid id)
         {
-            Event @event = await _eventsService.GetEventAsync(id, false);
+            var @event = await _eventsService.GetEventAsync(id, false);
 
             return View(_mapper.Map<Event, UpdateEventViewModel>(@event));
         }
@@ -131,7 +132,7 @@ namespace FiiPrezent.Web.Controllers
             if (@event == null)
                 return NotFound();
 
-            return View(new EventViewModel(@event));
+            return View(_mapper.Map<Event, EventViewModel>(@event));
         }
 
         [HttpPost]
@@ -144,6 +145,5 @@ namespace FiiPrezent.Web.Controllers
 
             return RedirectToAction(nameof(Browse));
         }
-
     }
 }

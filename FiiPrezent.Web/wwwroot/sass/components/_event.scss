@@ -3,63 +3,16 @@
 @import "../base/_mixins.scss";
 
 .event {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    margin-bottom: 30px;
-    border-radius: 2px;
-    @include box_shadow(1);
-
-    &__content {
-        padding: 10px 20px;
+    &:hover {
+        @include box_shadow(2);
     }
 
-    &__name {
-        color: $color-text-dark;
-        font-weight: 500;
-        text-transform: uppercase;
+    .title a {
+        color: $font-color-dark;
+        font-weight: normal;
     }
 
-    &__description {
-        margin-top: 5px;
-        font-size: 0.8rem;
-    }
-
-    &__date,
-    &__location {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        color: $color-text-dark-faded;
-    }
-
-    &__date {
-        margin-top: 20px;
-    }
-
-    &__actions {
-        margin-top: auto;
-        border-top: 1px solid #EFF2F5;
-        height: 40px;
-        text-align: right;
-
-        .action-item {
-            display: inline-block;
-            font-size: 20px;
-            margin-top: 5px;
-            width: 40px;
-            height: 40px;
-            border-left: 1px solid #EFF2F5;
-            box-sizing: border-box;
-            text-align: center;
-
-            a {
-                color: $color-text-dark-faded;
-            }
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
+    .content {
+        color: $font-color-dark-faded;
     }
 }

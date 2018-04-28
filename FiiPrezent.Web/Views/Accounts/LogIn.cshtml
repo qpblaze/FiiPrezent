@@ -1,15 +1,14 @@
-﻿@using FiiPrezent.Web.Models
-@model FiiPrezent.Web.Models.CreateEventViewModel
+﻿@model CreateEventViewModel
 
 @{
     ViewData["Title"] = "Log In";
 }
 
 <section class="hero is-medium has-bg-img">
-    <img src="~/img/bg.jpg" class="is-bg-img" />
+    <img src="~/img/bg.jpg" class="is-bg-img"/>
     <div class="hero-filter"></div>
     <div class="hero-head">
-        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+        @Html.Partial("_NavigationPartial")
     </div>
     <div class="hero-body">
         <div class="container has-text-centered">
@@ -17,7 +16,7 @@
                 Log In
             </h1>
             <h2 class="subtitle">
-                If you want to take part to an event or create one you have to log in.<br />
+                If you want to take part to an event or create one you have to log in.<br/>
                 You can only log in with facebook (we have some lazy developers).
             </h2>
         </div>

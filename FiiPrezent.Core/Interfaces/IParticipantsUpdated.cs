@@ -6,6 +6,6 @@ namespace FiiPrezent.Core.Interfaces
 {
     public interface IParticipantsUpdated
     {
-        void OnParticipantsUpdated(Guid eventId, List<Participant> newParticipants);
+        void OnParticipantsUpdated(Guid eventId, List<Participant> participants);
     }
 }

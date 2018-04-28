@@ -6,6 +6,7 @@ using FiiPrezent.Infrastructure;
 using FiiPrezent.Infrastructure.Data;
 using FiiPrezent.Infrastructure.Hubs;
 using FiiPrezent.Infrastructure.Services;
+using FiiPrezent.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

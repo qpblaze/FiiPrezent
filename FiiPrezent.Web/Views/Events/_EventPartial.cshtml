@@ -1,0 +1,28 @@
+﻿@model BrowseEventViewModel
+
+<div class="column is-4">
+    <div class="card event">
+        <div class="card-image">
+            <figure class="image is-2by1">
+                <a asp-action="Details" asp-route-id="@Model.Id">
+                    <img src="@Model.ImagePath" alt="">
+                </a>
+            </figure>
+        </div>
+        <div class="card-content">
+            <div class="media">
+                <div class="media-content">
+                    <p class="title is-4"><a asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a></p>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-content">
+                    <span>@Model.Location</span>
+                    <br/>
+                    <span>@Model.Date.ToShortDateString()</span>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

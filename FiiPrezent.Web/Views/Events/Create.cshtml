@@ -1,32 +1,33 @@
-﻿@using FiiPrezent.Web.Models
-@model FiiPrezent.Web.Models.CreateEventViewModel
+﻿@model CreateEventViewModel
 
 @{
     ViewData["Title"] = "Create Event";
 }
 
 @section Styles {
-    <link href="~/lib/bulma-calendar/dist/bulma-calendar.min.css" rel="stylesheet" />
+    <link href="~/lib/bulma-calendar/dist/bulma-calendar.min.css" rel="stylesheet"/>
 }
 
 @section Scripts {
     <script src="~/lib/bulma-calendar/dist/bulma-calendar.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var datePicker = new bulmaCalendar(document.getElementById('datepicker'), {
-                overlay: true,
-                closeOnSelect: true,
-                dateFormat: 'dd.mm.yyyy'
+        document.addEventListener('DOMContentLoaded',
+            function() {
+                var datePicker = new bulmaCalendar(document.getElementById('datepicker'),
+                    {
+                        overlay: true,
+                        closeOnSelect: true,
+                        dateFormat: 'dd.mm.yyyy'
+                    });
             });
-        });
     </script>
 }
 
 <section class="hero is-medium has-bg-img">
-    <img src="~/img/bg.jpg" class="is-bg-img" />
+    <img src="~/img/bg.jpg" class="is-bg-img"/>
     <div class="hero-filter"></div>
     <div class="hero-head">
-        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+        @Html.Partial("_NavigationPartial")
     </div>
     <div class="hero-body">
         <div class="container has-text-centered">
@@ -34,7 +35,7 @@
                 Create an event
             </h1>
             <h2 class="subtitle">
-                If you can't join an event then make one of your own.<br />
+                If you can't join an event then make one of your own.<br/>
                 Let's see if anyone is going to show up...
             </h2>
         </div>
@@ -46,7 +47,7 @@
         Create a new event
     </div>
     <form asp-action="Create">
-        <div class="columns">
+        <div class="columns is-multiline">
             <div class="column is-12">
                 <div class="field">
                     <label class="label" asp-for="Name"></label>
@@ -59,24 +60,16 @@
                     <span asp-validation-for="Name" class="has-text-danger"></span>
                 </div>
             </div>
-        </div>
-        <div class="columns">
             <div class="column is-12">
                 <div class="field">
 
                     <label class="label" asp-for="Description"></label>
-                    <div class="control has-icons-left">
-                        <input asp-for="Description" class="input is-medium">
-                        <span class="icon is-small is-left">
-                            <i class="fa fa-info-circle"></i>
-                        </span>
+                    <div class="control">
+                        <textarea asp-for="Description" class="textarea is-medium"></textarea>
                     </div>
                     <span asp-validation-for="Description" class="has-text-danger"></span>
                 </div>
             </div>
-        </div>
-
-        <div class="columns">
             <div class="column is-12">
                 <div class="field">
 
@@ -90,9 +83,6 @@
                     <span asp-validation-for="Description" class="has-text-danger"></span>
                 </div>
             </div>
-        </div>
-
-        <div class="columns">
             <div class="column is-12">
                 <div class="field">
 
@@ -106,8 +96,6 @@
                     <span asp-validation-for="SecretCode" class="has-text-danger"></span>
                 </div>
             </div>
-        </div>
-        <div class="columns">
             <div class="column is-12">
                 <div class="field">
                     <label class="label" asp-for="Location"></label>
@@ -120,9 +108,6 @@
                     <span asp-validation-for="Location" class="has-text-danger"></span>
                 </div>
             </div>
-        </div>
-
-        <div class="columns">
             <div class="column is-12">
                 <div class="field">
                     <label class="label" asp-for="Date"></label>
@@ -135,13 +120,30 @@
                     <span asp-validation-for="Date" class="has-text-danger"></span>
                 </div>
             </div>
-        </div>
-        <div class="columns">
+            @*<div class="column is-12">
+                <div class="field">
+                    <label class="label" asp-for="ImagePath"></label>
+                    <div class="file is-large is-boxed">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="resume">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose a file…
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>*@
             <div class="column is-2">
                 <div class="field">
                     <button type="submit" class="button is-primary is-medium is-fullwidth">create</button>
                 </div>
             </div>
+
         </div>
     </form>
 </div>

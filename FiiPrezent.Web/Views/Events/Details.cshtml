@@ -13,19 +13,16 @@
 
         function appendParticipant(el) {
             $('.participants').append(
-                $("<div />").addClass("columns participant is-vcentered").append(
-                    $("<div />").addClass("column is-2").append(
-                        $("<figure />").addClass("image is-128x128 participant__image").append(
-                            $("<img />").addClass("is-rounded").attr("src", el.Account.Picture)
-                        )
-                    )
-                )
-                .append(
-                    $("<div />").addClass("column is-5").text(el.Account.Name)
-                )
-                .append(
-                    $("<div />").addClass("column is-5").text(el.Account.Email)
-                )
+                `<div class="column is-2 participant has-text-centered">
+                    <figure class="image">
+                        <img src="${el.Picture}" class="is-rounded" alt="Placeholder image">
+                    </figure>
+                    <h3 class="name">${el.Name}</h3>
+                    <br/>
+                    <span class="icon">
+                        <i class="fab fa-2x fa-facebook"></i>
+                    </span>
+                </div>`
             );
         }
 
@@ -47,7 +44,7 @@
     <img src="~/img/bg.jpg" class="is-bg-img"/>
     <div class="hero-filter"></div>
     <div class="hero-head">
-        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+        @Html.Partial("_NavigationPartial")
     </div>
     <div class="hero-body">
         <div class="container has-text-centered">
@@ -62,33 +59,83 @@
 </section>
 
 <div class="container card-box">
-    <div class="card-box__title">
-        @Model.Name
-    </div>
-    <div class="card-box__subtitle">
-        <h2>@Model.Description</h2>
-    </div>
-    <div class="has-text-centered">
-        <div class="participants">
-
-            @foreach (var p in Model.Participants)
+    <div class="columns">
+        <div class="column is-8">
+            <figure class="image">
+                <img src="@Model.ImagePath" alt=""/>
+            </figure>
+        </div>
+        <div class="column is-4 has-text-centered is-vcentered">
+            <div class="card-box__title is-uppercase">
+                @Model.Name
+            </div>
+            <h1 class="card-box__details">
+                @Model.Participants.Count() <br/>
+                PARTICIPANT(S)
+            </h1>
+            <br/><br />
+            <a asp-controller="Home" asp-action="Join" class="button is-primary is-medium">join now</a>
+            @if (User.GetNameIdentifier() == Model.NameIdentifier)
             {
-                <div class="columns participant is-vcentered">
-                    <div class="column is-2">
-                        <figure class="image is-128x128 participant__image">
-                            <img src="@p.Picture" class="is-rounded"/>
-                        </figure>
+                <br/><br />
+                <div class="columns">
+                    <div class="column">
+                        <a asp-action="Update" asp-controller="Events" asp-route-id="@Model.Id" class="button is-info is-fullwidth"><i class="fa fa-edit"></i>&nbsp;Edit</a>
                     </div>
-                    <div class="column is-5">
-                        @p.Name
+                    <div class="column">
+                        <form asp-controller="Events" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                            <a onclick="$(this).closest('form').submit()" class="button is-danger is-fullwidth"><i class="fa fa-times"></i>&nbsp;Delete</a>
+                        </form>
                     </div>
-                    <div class="column is-5">
-
-                        @p.Email
-                    </div>
-
                 </div>
             }
         </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-8">
+            <label asp-for="Name" class="label section-label"></label>
+            <div class="card-box__subtitle">
+                <h2>@Model.Name</h2>
+            </div>
+
+            <label asp-for="Description" class="label section-label"></label>
+            <div class="card-box__subtitle">
+                <h2>@Model.Description</h2>
+            </div>
+
+            <label asp-for="Location" class="label section-label"></label>
+            <div class="card-box__subtitle">
+                <h2>@Model.Location</h2>
+            </div>
+
+            <label asp-for="Date" class="label section-label"></label>
+            <div class="card-box__subtitle">
+                <h2>@Model.Date.ToShortDateString()</h2>
+            </div>
+
+            <label class="label section-label">Participants</label>
+
+        </div>
+    </div>
+    
+    <div class="participants">
+
+        <div class="columns is-multiline">
+            @foreach (var p in Model.Participants)
+            {
+                <div class="column is-2 participant has-text-centered">
+                    <figure class="image">
+                        <img src="@p.Picture" class="is-rounded" alt="Placeholder image">
+                    </figure>
+                    <h3 class="name">@p.Name</h3>
+                    <br/>
+                    <span class="icon">
+                        <i class="fab fa-2x fa-facebook"></i>
+                    </span>
+                </div>
+            }
+        </div>
+
     </div>
 </div>
