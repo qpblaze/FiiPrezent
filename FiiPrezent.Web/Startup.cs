@@ -78,7 +78,7 @@ namespace FiiPrezent.Web
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseAuthentication();
             
