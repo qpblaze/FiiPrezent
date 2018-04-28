@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using AutoMapper;
 using FiiPrezent.Core.Entities;
 using FiiPrezent.Core.Interfaces;
 using FiiPrezent.Infrastructure;
@@ -39,6 +40,8 @@ namespace FiiPrezent.Web
                 options.Filters.Add(new RequireHttpsAttribute());
 
             });
+
+            services.AddAutoMapper();
 
             var cultureInfo = new CultureInfo("ro-RO");
 

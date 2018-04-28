@@ -1,6 +1,4 @@
-﻿@using FiiPrezent.Web.Helpers
-@using FiiPrezent.Web.Models
-@model FiiPrezent.Web.Models.BrowseViewModel
+﻿@model BrowseViewModel
 
 @{
     ViewData["Title"] = "Browse";
@@ -86,38 +84,40 @@
 
 
 <div class="container">
-        <div class="columns is-multiline">
-            @foreach (var item in Model.Events)
-            {
-                <div class="column is-4">
-                    <div class="event">
-                        <figure class="image">
-                            <img src="@item.ImagePath">
-                        </figure>
-                        <div class="event__content">
-                            <h2 class="title is-4 is-spaced">@item.Name</h2>
-                            <p class="subtitle is-5">@item.Description</p>
-                            <div class="event__date">@item.Date.ToShortDateString()</div>
-                            <div class="event__location">@item.Location</div>
+    <div class="columns is-multiline">
+        @foreach (var item in Model.Events)
+        {
+            <div class="column is-4">
+                <div class="event">
+                    <figure class="image">
+                        <img src="@item.ImagePath">
+                    </figure>
+                    <div class="event__content">
+                        <h2 class="title is-4 is-spaced">@item.Name</h2>
+                        <p class="subtitle is-5">@item.Description</p>
+                        <div class="event__date">@item.Date.ToShortDateString()</div>
+                        <div class="event__location">@item.Location</div>
+                    </div>
+                    <div class="event__actions">
+                        <div class="action-item">
+                            <a asp-action="Details" asp-controller="Events" asp-route-id="@item.Id" class="btn btn-action"><i class="fa fa-eye"></i></a>
                         </div>
-                        <div class="event__actions">
+                        @if (User.GetNameIdentifier() == item.AccountId)
+                        {
                             <div class="action-item">
-                                <a asp-action="Details" asp-controller="Events" asp-route-id="@item.Id" class="btn btn-action"><i class="fa fa-eye"></i></a>
+                                <a asp-action="Update" asp-controller="Events" asp-route-id="@item.Id" class="btn btn-action"><i class="fa fa-edit"></i></a>
                             </div>
-                            @if (User.GetNameIdentifier() == item.AccountId)
-                            {
-
-                                <div class="action-item">
-                                    <form asp-controller="Events" asp-action="Delete" asp-route-id="@item.Id" method="post">
-                                        <a onclick="$(this).closest('form').submit()" class="btn btn-action"><i class="fa fa-times"></i></a>
-                                    </form>
-                                </div>
-                            }
-                        </div>
+                            <div class="action-item">
+                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                                    <a onclick="$(this).closest('form').submit()" class="btn btn-action"><i class="fa fa-times"></i></a>
+                                </form>
+                            </div>
+                        }
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
+</div>
 
 

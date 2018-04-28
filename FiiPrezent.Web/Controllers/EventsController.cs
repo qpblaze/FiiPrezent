@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using FiiPrezent.Core;
 using FiiPrezent.Core.Entities;
 using FiiPrezent.Core.Interfaces;
@@ -15,10 +15,12 @@ namespace FiiPrezent.Web.Controllers
     public class EventsController : Controller
     {
         private readonly IEventsService _eventsService;
+        private readonly IMapper _mapper;
 
-        public EventsController(IEventsService eventsService)
+        public EventsController(IEventsService eventsService, IMapper mapper)
         {
             _eventsService = eventsService;
+            _mapper = mapper;
         }
 
         private void AddModelErrors(ResultStatus result)
@@ -62,7 +64,7 @@ namespace FiiPrezent.Web.Controllers
         }
 
         [Authorize]
-        [Route("create-event")]
+        [Route("create")]
         public IActionResult Create()
         {
             return View();
@@ -70,23 +72,47 @@ namespace FiiPrezent.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("create-event")]
+        [Route("create")]
         public async Task<IActionResult> Create(CreateEventViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var @event = new Event
-            {
-                Name = model.Name,
-                ImagePath = model.ImagePath ?? "/img/event-placeholder.jpg",
-                Description = model.Description,
-                SecretCode = model.SecretCode,
-                Location = model.Location,
-                Date = model.Date
-            };
+            var @event = _mapper.Map<CreateEventViewModel, Event>(model);
+            @event.ImagePath = model.ImagePath ?? "/img/event-placeholder.jpg";
 
             var result = await _eventsService.CreateEventAsync(@event, User.GetNameIdentifier());
+
+            if (result.Type != ResultStatusType.Ok)
+            {
+                AddModelErrors(result);
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Browse));
+        }
+
+        [Authorize]
+        [Route("update")]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            Event @event = await _eventsService.GetEventAsync(id, false);
+
+            return View(_mapper.Map<Event, UpdateEventViewModel>(@event));
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("update")]
+        public async Task<IActionResult> Update(UpdateEventViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var @event = _mapper.Map<UpdateEventViewModel, Event>(model);
+            @event.ImagePath = model.ImagePath ?? "/img/event-placeholder.jpg";
+
+            var result = await _eventsService.UpdateEventAsync(@event);
 
             if (result.Type != ResultStatusType.Ok)
             {
@@ -100,12 +126,12 @@ namespace FiiPrezent.Web.Controllers
         [Route("event")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var result = await _eventsService.GetEvent(id);
+            var @event = await _eventsService.GetEventAsync(id);
 
-            if (result.Type == ResultStatusType.NotFound)
+            if (@event == null)
                 return NotFound();
 
-            return View(new EventViewModel(result.Object));
+            return View(new EventViewModel(@event));
         }
 
         [HttpPost]
@@ -118,5 +144,6 @@ namespace FiiPrezent.Web.Controllers
 
             return RedirectToAction(nameof(Browse));
         }
+
     }
 }

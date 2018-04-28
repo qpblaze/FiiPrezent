@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using FiiPrezent.Core;
-using FiiPrezent.Core.Entities;
 using FiiPrezent.Core.Interfaces;
 using FiiPrezent.Web.Helpers;
 using FiiPrezent.Web.Models;

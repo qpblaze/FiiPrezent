@@ -1,0 +1,148 @@
+﻿@model UpdateEventViewModel
+
+@{
+    ViewData["Title"] = "Update Event";
+}
+
+@section Styles {
+    <link href="~/lib/bulma-calendar/dist/bulma-calendar.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/lib/bulma-calendar/dist/bulma-calendar.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var datePicker = new bulmaCalendar(document.getElementById('datepicker'), {
+                overlay: true,
+                closeOnSelect: true,
+                dateFormat: 'dd.mm.yyyy'
+            });
+        });
+    </script>
+}
+
+<section class="hero is-medium has-bg-img">
+    <img src="~/img/bg.jpg" class="is-bg-img" />
+    <div class="hero-filter"></div>
+    <div class="hero-head">
+        @Html.Partial("../Shared/_NavigationPartial.cshtml")
+    </div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title is-spaced">
+                Update an event
+            </h1>
+            <h2 class="subtitle">
+                If you can't join an event then make one of your own.<br />
+                Let's see if anyone is going to show up...
+            </h2>
+        </div>
+    </div>
+</section>
+
+<div class="container card-box">
+    <div class="card-box__title">
+        Update an event
+    </div>
+    <form asp-action="Update">
+        <input asp-for="Id" hidden />
+        <div asp-validation-summary="All"></div>
+        <div class="columns">
+            <div class="column is-12">
+                <div class="field">
+                    <label class="label" asp-for="Name"></label>
+                    <div class="control has-icons-left">
+                        <input asp-for="Name" class="input is-medium">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Name" class="has-text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-12">
+                <div class="field">
+
+                    <label class="label" asp-for="Description"></label>
+                    <div class="control has-icons-left">
+                        <input asp-for="Description" class="input is-medium">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-info-circle"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Description" class="has-text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-12">
+                <div class="field">
+
+                    <label class="label" asp-for="ImagePath"></label>
+                    <div class="control has-icons-left">
+                        <input asp-for="ImagePath" class="input is-medium">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-image"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Description" class="has-text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-12">
+                <div class="field">
+
+                    <label class="label" asp-for="SecretCode"></label>
+                    <div class="control has-icons-left">
+                        <input asp-for="SecretCode" class="input is-medium">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-key"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="SecretCode" class="has-text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-12">
+                <div class="field">
+                    <label class="label" asp-for="Location"></label>
+                    <div class="control has-icons-left">
+                        <input asp-for="Location" class="input is-medium">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-map-marker"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Location" class="has-text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-12">
+                <div class="field">
+                    <label class="label" asp-for="Date"></label>
+                    <div class="control has-icons-left">
+                        <input asp-for="Date" id="datepicker" class="input is-medium" autocomplete="off">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-clock"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Date" class="has-text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-2">
+                <div class="field">
+                    <button type="submit" class="button is-primary is-medium is-fullwidth">update</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -40,17 +40,17 @@ namespace FiiPrezent.Infrastructure.Services
             return await _unitOfWork.Events.ListAllAsync(x => x.Account);
         }
 
-        public async Task<ResultStatus> GetEvent(Guid id)
+        public async Task<Event> GetEventAsync(Guid id, bool include = true)
         {
             var @event = await _unitOfWork.Events.GetByIdAsync(id);
 
-            if (@event == null)
-                return new ResultStatus(ResultStatusType.NotFound);
+            if (!include)
+                return @event;
 
             @event.Participants = await _unitOfWork.Participants.GetAsync(x => x.EventId == @event.Id);
             @event.Account = await _accountsService.GetAccountById(@event.AccountId);
 
-            return new ResultStatus(@event);
+            return @event;
         }
 
         public async Task<ResultStatus> DeleteEvent(Guid id)
@@ -66,6 +66,24 @@ namespace FiiPrezent.Infrastructure.Services
             }
 
             _unitOfWork.Events.Delete(@event);
+
+            await _unitOfWork.CompletedAsync();
+
+            return new ResultStatus();
+        }
+
+        public async Task<ResultStatus> UpdateEventAsync(Event @event)
+        {
+            var oldEvent = await _unitOfWork.Events.GetByIdAsync(@event.Id);
+
+            oldEvent.Name = @event.Name;
+            oldEvent.Description = @event.Description;
+            oldEvent.ImagePath = @event.ImagePath;
+            oldEvent.Location = @event.Location;
+            oldEvent.SecretCode = @event.SecretCode;
+            oldEvent.Date = @event.Date;
+
+            _unitOfWork.Events.Update(oldEvent);
 
             await _unitOfWork.CompletedAsync();
 
