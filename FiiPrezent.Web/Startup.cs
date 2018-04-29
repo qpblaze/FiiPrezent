@@ -39,7 +39,6 @@ namespace FiiPrezent.Web
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 options.Filters.Add(new RequireHttpsAttribute());
-
             });
 
             services.AddAutoMapper();

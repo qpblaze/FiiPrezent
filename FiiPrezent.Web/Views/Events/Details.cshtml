@@ -34,6 +34,8 @@
                 list.forEach(function(el) {
                     appendParticipant(el);
                 });
+
+                $("#counter").text(list.length);
             });
 
         connection.start().catch(console.error);
@@ -70,7 +72,7 @@
                 @Model.Name
             </div>
             <h1 class="card-box__details">
-                @Model.Participants.Count() <br/>
+                <span id="counter">@Model.Participants.Count()</span> <br/>
                 PARTICIPANT(S)
             </h1>
             <br/><br />
@@ -80,11 +82,11 @@
                 <br/><br />
                 <div class="columns">
                     <div class="column">
-                        <a asp-action="Update" asp-controller="Events" asp-route-id="@Model.Id" class="button is-info is-fullwidth"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                        <a asp-action="Update" asp-controller="Events" asp-route-id="@Model.Id" class="button is-fullwidth"><i class="fa fa-edit"></i>&nbsp;&nbsp;Edit</a>
                     </div>
                     <div class="column">
                         <form asp-controller="Events" asp-action="Delete" asp-route-id="@Model.Id" method="post">
-                            <a onclick="$(this).closest('form').submit()" class="button is-danger is-fullwidth"><i class="fa fa-times"></i>&nbsp;Delete</a>
+                            <a onclick="$(this).closest('form').submit()" class="button is-fullwidth"><i class="fa fa-times"></i>&nbsp;&nbsp;Delete</a>
                         </form>
                     </div>
                 </div>
@@ -130,9 +132,11 @@
                     </figure>
                     <h3 class="name">@p.Name</h3>
                     <br/>
-                    <span class="icon">
-                        <i class="fab fa-2x fa-facebook"></i>
-                    </span>
+                    <a href="https://www.facebook.com/@p.NameIdentifier" target="_blank">
+                        <span class="icon">
+                            <i class="fab fa-2x fa-facebook"></i>
+                        </span>
+                    </a>
                 </div>
             }
         </div>

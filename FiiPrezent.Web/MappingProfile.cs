@@ -21,7 +21,8 @@ namespace FiiPrezent.Web
 
             CreateMap<Participant, ParticipantViewModel>()
                 .ForMember(x => x.Name, o => o.MapFrom(s => s.Account.Name))
-                .ForMember(x => x.Picture, o => o.MapFrom(s => s.Account.Picture));
+                .ForMember(x => x.Picture, o => o.MapFrom(s => s.Account.Picture))
+                .ForMember(x => x.NameIdentifier, o => o.MapFrom(s => s.Account.NameIdentifier));
         }
     }
 }

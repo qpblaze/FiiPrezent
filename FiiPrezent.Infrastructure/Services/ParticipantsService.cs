@@ -36,8 +36,8 @@ namespace FiiPrezent.Infrastructure.Services
             Participant participant = new Participant
             {
                 Id = Guid.NewGuid(),
-                Event = @event,
-                Account = await _accountsService.GetAccountByNameIdentifier(nameIdentifier)
+                EventId = @event.Id,
+                AccountId = (await _accountsService.GetAccountByNameIdentifier(nameIdentifier)).Id
             };
 
             await _unitOfWork.Participants.AddAsync(participant);
