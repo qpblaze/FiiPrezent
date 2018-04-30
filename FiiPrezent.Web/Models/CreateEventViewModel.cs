@@ -25,7 +25,7 @@ namespace FiiPrezent.Web.Models
         public IFormFile Image { get; set; }
 
         [Required(ErrorMessage = "Please enter the date.")]
-        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime Date { get; set; }
     }
 }

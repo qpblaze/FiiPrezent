@@ -22,7 +22,7 @@ namespace FiiPrezent.Tests
 
             unitOfWorkMock.Setup(x => x.Events).Returns(_eventRepositoryMock.Object);
 
-            _eventsService = new EventsService(unitOfWorkMock.Object, _accountsServiceMock.Object);
+            _eventsService = new EventsService(unitOfWorkMock.Object, _accountsServiceMock.Object, new FileManager());
         }
 
         private readonly Mock<IRepository<Event>> _eventRepositoryMock;

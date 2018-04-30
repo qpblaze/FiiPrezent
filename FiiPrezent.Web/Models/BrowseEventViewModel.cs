@@ -10,7 +10,7 @@ namespace FiiPrezent.Web.Models
         public string Location { get; set; }
         public string ImagePath { get; set; }
 
-        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dddd, dd MMMM yyyy}")]
         public DateTime Date { get; set; }
     }
 }

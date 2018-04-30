@@ -113,7 +113,7 @@
 
             <label asp-for="Date" class="label section-label"></label>
             <div class="card-box__subtitle">
-                <h2>@Model.Date.ToShortDateString()</h2>
+                <h2>@Html.DisplayFor(m => m.Date)</h2>
             </div>
 
             <label class="label section-label">Participants</label>
