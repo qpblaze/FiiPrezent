@@ -43,11 +43,6 @@ namespace FiiPrezent.Web
 
             services.AddAutoMapper();
 
-            var cultureInfo = new CultureInfo("ro-RO");
-
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-
             services.AddDbContext<ApplicationDbContext>(optiions =>
             {
                 optiions.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
