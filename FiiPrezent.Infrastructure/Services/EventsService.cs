@@ -12,13 +12,16 @@ namespace FiiPrezent.Infrastructure.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAccountsService _accountsService;
+        private readonly IFileManager _fileManager;
 
         public EventsService(
             IUnitOfWork unitOfWork,
-            IAccountsService accountsService)
+            IAccountsService accountsService,
+            IFileManager fileManager)
         {
             _unitOfWork = unitOfWork;
             _accountsService = accountsService;
+            _fileManager = fileManager;
         }
 
         public async Task<ResultStatus> CreateEventAsync(Event @event, string nameIdentifier)
@@ -27,6 +30,7 @@ namespace FiiPrezent.Infrastructure.Services
                 return new ResultStatus(ResultStatusType.InvalidCode, nameof(@event.SecretCode), "This code is already in use.");
 
             @event.Id = new Guid();
+            @event.ImagePath = await _fileManager.UploadAsync(@event.Image);
             @event.Account = await _accountsService.GetAccountByNameIdentifier(nameIdentifier);
 
             await _unitOfWork.Events.AddAsync(@event);
@@ -65,6 +69,7 @@ namespace FiiPrezent.Infrastructure.Services
                 _unitOfWork.Participants.Delete(participant);
             }
 
+            _fileManager.Delete(@event.ImagePath);
             _unitOfWork.Events.Delete(@event);
 
             await _unitOfWork.CompletedAsync();
@@ -78,10 +83,15 @@ namespace FiiPrezent.Infrastructure.Services
 
             oldEvent.Name = @event.Name;
             oldEvent.Description = @event.Description;
-            oldEvent.ImagePath = @event.ImagePath;
             oldEvent.Location = @event.Location;
             oldEvent.SecretCode = @event.SecretCode;
             oldEvent.Date = @event.Date;
+
+            if (@event.Image != null)
+            {
+                _fileManager.Delete(oldEvent.ImagePath);
+                oldEvent.ImagePath = await _fileManager.UploadAsync(@event.Image);
+            }
 
             _unitOfWork.Events.Update(oldEvent);
 

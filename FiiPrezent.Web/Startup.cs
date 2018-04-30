@@ -70,6 +70,7 @@ namespace FiiPrezent.Web
             services.AddTransient<IParticipantsService, ParticipantsService>();
             services.AddTransient<IEventsService, EventsService>();
             services.AddTransient<IAccountsService, AccountsService>();
+            services.AddTransient<IFileManager, FileManager>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             

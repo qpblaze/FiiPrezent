@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace FiiPrezent.Web.Models
 {
@@ -20,9 +21,9 @@ namespace FiiPrezent.Web.Models
 
         [Required(ErrorMessage = "Please enter the location.")]
         public string Location { get; set; }
-
-        [DisplayName("Image Link")]
-        public string ImagePath { get; set; }
+        
+        [DisplayName("Image")]
+        public IFormFile Image { get; set; }
 
         [Required(ErrorMessage = "Please enter the date.")]
         [DataType(DataType.DateTime)]

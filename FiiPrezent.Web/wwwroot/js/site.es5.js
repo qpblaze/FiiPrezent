@@ -40,3 +40,8 @@ $(window).on('load', function (e) {
     }
 });
 
+$('.file-input').change(function () {
+    var file = $(this)[0].files[0].name;
+    $(this).siblings(".file-name").text(file);
+});
+

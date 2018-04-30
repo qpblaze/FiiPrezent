@@ -28,4 +28,7 @@
     <ProjectReference Include="..\FiiPrezent.Core\FiiPrezent.Core.csproj" />
     <ProjectReference Include="..\FiiPrezent.Infrastructure\FiiPrezent.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
 </Project>

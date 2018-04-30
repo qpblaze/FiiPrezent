@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace FiiPrezent.Core.Entities
 {
@@ -14,6 +15,9 @@ namespace FiiPrezent.Core.Entities
         public string Location { get; set; }
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }
+
+        [NotMapped]
+        public IFormFile Image { get; set; }
 
         [ForeignKey(nameof(AccountId))]
         public Account Account { get; set; }

@@ -46,7 +46,7 @@
     <div class="card-box__title">
         Create a new event
     </div>
-    <form asp-action="Create">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
         <div class="columns is-multiline">
             <div class="column is-12">
                 <div class="field">
@@ -66,19 +66,6 @@
                     <label class="label" asp-for="Description"></label>
                     <div class="control">
                         <textarea asp-for="Description" class="textarea is-medium"></textarea>
-                    </div>
-                    <span asp-validation-for="Description" class="has-text-danger"></span>
-                </div>
-            </div>
-            <div class="column is-12">
-                <div class="field">
-
-                    <label class="label" asp-for="ImagePath"></label>
-                    <div class="control has-icons-left">
-                        <input asp-for="ImagePath" class="input is-medium">
-                        <span class="icon is-small is-left">
-                            <i class="fa fa-image"></i>
-                        </span>
                     </div>
                     <span asp-validation-for="Description" class="has-text-danger"></span>
                 </div>
@@ -120,12 +107,12 @@
                     <span asp-validation-for="Date" class="has-text-danger"></span>
                 </div>
             </div>
-            @*<div class="column is-12">
+            <div class="column is-12">
                 <div class="field">
-                    <label class="label" asp-for="ImagePath"></label>
-                    <div class="file is-large is-boxed">
+                    <label class="label" asp-for="Image"></label>
+                    <div class="file has-name is-medium is-fullwidth">
                         <label class="file-label">
-                            <input class="file-input" type="file" name="resume">
+                            <input class="file-input" asp-for="Image" type="file">
                             <span class="file-cta">
                                 <span class="file-icon">
                                     <i class="fas fa-upload"></i>
@@ -134,10 +121,14 @@
                                     Choose a file…
                                 </span>
                             </span>
+                            <span class="file-name">
+                                No image selected.
+                            </span>
                         </label>
                     </div>
+                    <span asp-validation-for="Image" class="has-text-danger"></span>
                 </div>
-            </div>*@
+            </div>
             <div class="column is-2">
                 <div class="field">
                     <button type="submit" class="button is-primary is-medium is-fullwidth">create</button>

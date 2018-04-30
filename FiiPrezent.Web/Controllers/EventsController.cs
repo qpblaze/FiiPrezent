@@ -80,7 +80,6 @@ namespace FiiPrezent.Web.Controllers
                 return View(model);
 
             var @event = _mapper.Map<CreateEventViewModel, Event>(model);
-            @event.ImagePath = model.ImagePath ?? "/img/event-placeholder.jpg";
 
             var result = await _eventsService.CreateEventAsync(@event, User.GetNameIdentifier());
 
@@ -111,7 +110,6 @@ namespace FiiPrezent.Web.Controllers
                 return View(model);
 
             var @event = _mapper.Map<UpdateEventViewModel, Event>(model);
-            @event.ImagePath = model.ImagePath ?? "/img/event-placeholder.jpg";
 
             var result = await _eventsService.UpdateEventAsync(@event);
 
