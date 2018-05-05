@@ -96,6 +96,9 @@ namespace FiiPrezent.Web.Controllers
         [Route("update")]
         public async Task<IActionResult> Update(Guid id)
         {
+            if (!(await _eventsService.IsOwner(id, User.GetNameIdentifier())))
+                return RedirectToAction(nameof(Browse));
+
             var @event = await _eventsService.GetEventAsync(id, false);
 
             return View(_mapper.Map<Event, UpdateEventViewModel>(@event));
@@ -108,6 +111,9 @@ namespace FiiPrezent.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
+
+            if (!(await _eventsService.IsOwner(model.Id, User.GetNameIdentifier())))
+                return RedirectToAction(nameof(Browse));
 
             var @event = _mapper.Map<UpdateEventViewModel, Event>(model);
 
@@ -136,6 +142,9 @@ namespace FiiPrezent.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {
+            if (!(await _eventsService.IsOwner(id, User.GetNameIdentifier())))
+                return RedirectToAction(nameof(Browse));
+
             var result = await _eventsService.DeleteEvent(id);
 
             if (result.Type == ResultStatusType.NotFound)

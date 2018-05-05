@@ -37,7 +37,7 @@ namespace FiiPrezent.Tests
         public async void RegisterParticipantAsync_WhenCodeIsInvalid_ReturnsError()
         {
             // TODO: nu merge cu expresii exacte (x => x.SecretCode == "code")
-            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>()))
+            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>(), It.IsAny<Expression<Func<Event, object>>>()))
                 .ReturnsAsync(() => new List<Event>());
 
             var result = await _participantsService.RegisterParticipantAsync("code", "");
@@ -49,13 +49,13 @@ namespace FiiPrezent.Tests
         public async void RegisterParticipantAsync_WhenParticipantAlreadyExists_ReturnsError()
         {
             // TODO: nu merge cu expresii exacte (x => x.SecretCode == "code")
-            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>()))
+            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>(), It.IsAny<Expression<Func<Event, object>>>()))
                 .ReturnsAsync(() => new List<Event>
                 {
                     new Event()
                 });
 
-            _participantRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Participant, bool>>>()))
+            _participantRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Participant, bool>>>(), It.IsAny<Expression<Func<Participant, object>>>()))
                 .ReturnsAsync(() => new List<Participant>
                 {
                     new Participant()
@@ -70,13 +70,13 @@ namespace FiiPrezent.Tests
         public async void RegisterParticipantAsync_WhenAllDataIsValid_CreateNewParticipant()
         {
             // TODO: nu merge cu expresii exacte (x => x.SecretCode == "code")
-            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>()))
+            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>(), It.IsAny<Expression<Func<Event, object>>>()))
                 .ReturnsAsync(() => new List<Event>
                 {
                     new Event()
                 });
 
-            _participantRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Participant, bool>>>()))
+            _participantRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Participant, bool>>>(), It.IsAny<Expression<Func<Participant, object>>>()))
                 .ReturnsAsync(() => new List<Participant>());
 
             _accountsServiceMock.Setup(x => x.GetAccountByNameIdentifier(It.IsAny<string>()))

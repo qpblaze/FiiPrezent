@@ -44,6 +44,17 @@ namespace FiiPrezent.Infrastructure.Services
             return await _unitOfWork.Events.ListAllAsync(x => x.Account);
         }
 
+        public async Task<bool> IsOwner(Guid id, string nameIdentifier)
+        {
+            var @event = await _unitOfWork.Events.GetByIdAsync(id);
+            @event.Account = await _accountsService.GetAccountById(@event.AccountId);
+
+            if (@event.Account.NameIdentifier == nameIdentifier)
+                return true;
+
+            return false;
+        }
+
         public async Task<Event> GetEventAsync(Guid id, bool include = true)
         {
             var @event = await _unitOfWork.Events.GetByIdAsync(id);
@@ -51,7 +62,7 @@ namespace FiiPrezent.Infrastructure.Services
             if (!include)
                 return @event;
 
-            @event.Participants = await _unitOfWork.Participants.GetAsync(x => x.EventId == @event.Id);
+            @event.Participants = await _unitOfWork.Participants.GetAsync(x => x.EventId == @event.Id, x => x.Account);
             @event.Account = await _accountsService.GetAccountById(@event.AccountId);
 
             return @event;

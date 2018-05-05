@@ -38,13 +38,13 @@ namespace FiiPrezent.Web.Controllers
         {
             var authProperties = new AuthenticationProperties
             {
-                RedirectUri = Url.Action(nameof(CheckLogIn), "Accounts")
+                RedirectUri = Url.Action(nameof(LogInCallBack), "Accounts")
             };
 
             return Challenge(authProperties, "Facebook");
         }
 
-        public async Task<IActionResult> CheckLogIn()
+        public async Task<IActionResult> LogInCallBack()
         {
             if (!(await _accountsService.Exists(User.GetNameIdentifier())))
             {

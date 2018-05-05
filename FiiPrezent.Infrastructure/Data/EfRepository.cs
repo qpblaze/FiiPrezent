@@ -31,11 +31,17 @@ namespace FiiPrezent.Infrastructure.Data
 
         public async Task<ICollection<TEntity>> ListAllAsync(Expression<Func<TEntity, object>> include = null)
         {
-            return await _context.Set<TEntity>().Include(include).ToListAsync();
+            if (include != null)
+                return await _context.Set<TEntity>().Include(include).ToListAsync();
+
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>> include = null)
         {
+            if(include != null)
+                return await _context.Set<TEntity>().Where(predicate).Include(include).ToListAsync();
+
             return await _context.Set<TEntity>().Where(predicate).ToListAsync();
         }
 

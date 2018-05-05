@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Security.Policy;
+using System.Threading.Tasks;
 using AutoMapper;
 using FiiPrezent.Core.Entities;
 using FiiPrezent.Core.Interfaces;
@@ -8,6 +10,7 @@ using FiiPrezent.Infrastructure.Hubs;
 using FiiPrezent.Infrastructure.Services;
 using FiiPrezent.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -54,6 +57,15 @@ namespace FiiPrezent.Web
                  {
                      o.AppId = Configuration["Authentication:Facebook:AppId"];
                      o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                     o.Events = new OAuthEvents
+                     {
+                         OnRemoteFailure = ctx =>
+                         {
+                             ctx.Response.Redirect("login");
+                             ctx.HandleResponse();
+                             return Task.FromResult(0);
+                         }
+                     };
                  });
 
             services.AddScoped<IParticipantsUpdated, ParticipantsUpdated>();

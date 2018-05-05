@@ -16,5 +16,7 @@ namespace FiiPrezent.Core.Interfaces
         Task<Event> GetEventAsync(Guid id, bool include = true);
 
         Task<IEnumerable<Event>> ListAllEventsAsync();
+
+        Task<bool> IsOwner(Guid eventId, string nameIdentifier);
     }
 }

@@ -12,7 +12,7 @@ namespace FiiPrezent.Core.Interfaces
 
         Task<ICollection<TEntity>> ListAllAsync(Expression<Func<TEntity, object>> include);
 
-        Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>> include = null);
         
         Task AddAsync(TEntity entity);
 

@@ -27,7 +27,7 @@ namespace FiiPrezent.Infrastructure.Data
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>> include)
         {
             throw new NotImplementedException();
         }

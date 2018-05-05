@@ -33,7 +33,7 @@ namespace FiiPrezent.Tests
         public async void CreateEventAsync_WhenCodeIsTaken_ReturnsError()
         {
             // TODO: nu merge cu expresii exacte (x => x.SecretCode == "code")
-            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>()))
+            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>(), It.IsAny<Expression<Func<Event, object>>>()))
                 .ReturnsAsync(() => new List<Event>
                 {
                     new Event()
@@ -48,7 +48,7 @@ namespace FiiPrezent.Tests
         public async void CreateEventAsync_WhenTheCodeIsValid_ReturnsNoError()
         {
             // TODO: nu merge cu expresii exacte (x => x.SecretCode == "code")
-            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>()))
+            _eventRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Event, bool>>>(), It.IsAny<Expression<Func<Event, object>>>()))
                 .ReturnsAsync(() => new List<Event>());
 
             _accountsServiceMock.Setup(x => x.GetAccountByNameIdentifier(It.IsAny<string>()))
